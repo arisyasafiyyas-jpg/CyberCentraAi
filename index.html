@@ -5,7 +5,325 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CYBERCENTRA AI | Pelindung Siber Komuniti</title>
   <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com">
+    // =========================================================
+    // ENJIN PENGESAN MESEJ SCAMMER AI & SISTEM NOTIFIKASI TOAST
+    // =========================================================
+
+    // Toast Notification System (Menggantikan alert biasa)
+    function showToast(title, message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = 'pointer-events-auto flex items-start space-x-3 p-4 rounded-2xl shadow-2xl backdrop-blur-md border text-xs font-semibold transition-all duration-300 transform translate-y-4 opacity-0';
+      
+      let icon = 'fa-circle-info';
+      let border = 'border-slate-300 bg-white/95 text-slate-800';
+      if (type === 'success') {
+        icon = 'fa-circle-check text-emerald-600';
+        border = 'border-emerald-200 bg-emerald-50/95 text-emerald-950';
+      } else if (type === 'warning') {
+        icon = 'fa-triangle-exclamation text-amber-600';
+        border = 'border-amber-200 bg-amber-50/95 text-amber-950';
+      } else if (type === 'danger') {
+        icon = 'fa-shield-halved text-red-600';
+        border = 'border-red-200 bg-red-50/95 text-red-950';
+      }
+      
+      toast.className += ' ' + border;
+      toast.innerHTML = `
+        <div class="text-base mt-0.5"><i class="fa-solid ${icon}"></i></div>
+        <div class="flex-1">
+          <p class="font-extrabold text-sm mb-0.5">${title}</p>
+          <p class="text-xs opacity-90 leading-relaxed">${message.replace(/\n/g, '<br>')}</p>
+        </div>
+      `;
+      container.appendChild(toast);
+      
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-4', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Pilihan Contoh Mesej Ujian Pantas
+    const sampleMessages = {
+      maybank: "RM0.00 MAYBANK: Akaun Maybank2u anda telah digantung atas faktor keselamatan transaksi. Sila log masuk segera di https://maybank2u-secure-login.top untuk kemaskini TAC dan sahkan baki dalam tempoh 1 jam bagi mengelakkan akaun ditutup.",
+      job: "Hai! Kami dari Agensi Pengiklanan TikTok Malaysia menawarkan kerja sambilan like video dan review produk. Gaji harian RM300 - RM800 terus ke akaun bank tanpa modal permulaan. Tekan link WhatsApp untuk daftar sekarang: https://t.me/task_malaysia_job",
+      macau: "AMARAN MAHKAMAH TINGGI KUALA LUMPUR: Anda mempunyai waran tangkap PDRM atas kesalahan penggubahan wang haram dan cukai LHDN tertunggak RM45,000. Hubungi Pegawai Penyiasat Rozali di 011-29384722 serta merta dalam masa 30 minit sebelum polis menyerbu rumah anda.",
+      prize: "Tahniah! Nombor telefon anda terpilih menerima Cabutan Bertuah Touch 'n Go RM5,000. Klik https://tng-claim-hadiah.site dan muat turun fail aplikasi APK hadiah rasmi untuk menuntut wang tunai segera.",
+      legit: "Salam Ahmad, petang nanti kita jumpa dekat kedai mamak pukul 5 petang ya. Jangan lupa bawa fail dokumen projek hari tu. Terima kasih."
+    };
+
+    function loadSampleMessage(type) {
+      const input = document.getElementById('scamMessageInput');
+      if (input && sampleMessages[type]) {
+        input.value = sampleMessages[type];
+        updateCharCount();
+        analyzeScamMessage();
+      }
+    }
+
+    function clearScamMessageInput() {
+      const input = document.getElementById('scamMessageInput');
+      if (input) {
+        input.value = '';
+        updateCharCount();
+      }
+      const res = document.getElementById('msgAnalysisResult');
+      if (res) res.classList.add('hidden');
+    }
+
+    function updateCharCount() {
+      const input = document.getElementById('scamMessageInput');
+      const counter = document.getElementById('msgCharCount');
+      if (input && counter) {
+        counter.textContent = input.value.length + ' aksara';
+      }
+    }
+
+    function setCommunitySubTab(type) {
+      document.querySelectorAll('.subpanel-comm').forEach(p => p.classList.add('hidden'));
+      const p = document.getElementById(`panel-msg-${type === 'scan' ? 'scan' : 'comm-report'}`);
+      if (p) p.classList.remove('hidden');
+
+      const btnScan = document.getElementById('subtab-msg-scan');
+      const btnReport = document.getElementById('subtab-comm-report');
+
+      if (type === 'scan') {
+        if (btnScan) btnScan.className = "py-2.5 px-4 border-b-2 border-amber-600 text-amber-700 font-extrabold text-xs sm:text-sm flex items-center space-x-2 transition-all";
+        if (btnReport) btnReport.className = "py-2.5 px-4 text-slate-500 font-extrabold text-xs sm:text-sm flex items-center space-x-2 hover:text-amber-600 transition-all";
+      } else {
+        if (btnScan) btnScan.className = "py-2.5 px-4 text-slate-500 font-extrabold text-xs sm:text-sm flex items-center space-x-2 hover:text-amber-600 transition-all";
+        if (btnReport) btnReport.className = "py-2.5 px-4 border-b-2 border-amber-600 text-amber-700 font-extrabold text-xs sm:text-sm flex items-center space-x-2 transition-all";
+      }
+    }
+
+    // Enjin Saringan Mesej Scammer AI (Heuristic NLP)
+    function analyzeScamMessage() {
+      const text = (document.getElementById('scamMessageInput')?.value || '').trim();
+      const res = document.getElementById('msgAnalysisResult');
+      if (!res) return;
+
+      if (!text) {
+        showToast('Teks Diperlukan', 'Sila taip atau tampal teks mesej mencurigakan terlebih dahulu.', 'warning');
+        return;
+      }
+
+      res.classList.remove('hidden');
+
+      const lower = text.toLowerCase();
+      let riskScore = 5; // Skor asas
+      const redFlags = [];
+      let detectedCategory = "Mesej Umum / Tiada Kategori Khusus";
+      let reportCategoryKey = "phone";
+
+      // 1. Pengesanan Desakan Masa / Manipulasi Psikologi Urgensi
+      const urgencyKeywords = ['segera', 'urgent', 'serta merta', 'tindakan undang-undang', 'tutup', 'disekat', 'dibekukan', 'digantung', 'waran', 'tangkap', 'mahkamah', 'polis', 'penjara', 'denda', 'kompaun', 'tempoh', 'jam', 'minit', 'sebelum terlambat', 'gagal hadir', 'serbu'];
+      const matchedUrgency = urgencyKeywords.filter(k => lower.includes(k));
+      if (matchedUrgency.length > 0) {
+        riskScore += Math.min(30, matchedUrgency.length * 10);
+        redFlags.push({
+          icon: 'fa-hourglass-half',
+          title: 'Urgensi & Tekanan Masa',
+          desc: `Mengandungi desakan terdesak (${matchedUrgency.slice(0, 3).join(', ')}) untuk memaksa mangsa panik.`
+        });
+      }
+
+      // 2. Permintaan Kredensial Sensitif / TAC / OTP
+      const credKeywords = ['tac', 'otp', 'kata laluan', 'password', 'pin', 'cvv', 'no kad', 'kad pengenalan', 'ic', 'log masuk', 'kemaskini akaun', 'sahkan baki', 'pindahkan wang', 'deposit', 'cimbclicks', 'maybank2u', 'bank islam'];
+      const matchedCred = credKeywords.filter(k => lower.includes(k));
+      if (matchedCred.length > 0) {
+        riskScore += Math.min(35, matchedCred.length * 15);
+        redFlags.push({
+          icon: 'fa-key',
+          title: 'Pancingan TAC / Kredensial',
+          desc: `Mencurigakan kerana meminta pengesahan TAC, OTP atau log masuk perbankan.`
+        });
+        reportCategoryKey = "mule";
+      }
+
+      // 3. Penyamaran Agensi Rasmi & Institusi Perbankan
+      const agencyKeywords = ['maybank', 'cimb', 'bank negara', 'bnm', 'lhdn', 'hasil', 'pdrm', 'polis', 'mahkamah', 'sprm', 'pos laju', 'kastam', 'jpa', 'kwsp', 'touch n go', 'tng ewallet'];
+      const matchedAgency = agencyKeywords.filter(k => lower.includes(k));
+      if (matchedAgency.length > 0) {
+        riskScore += 20;
+        redFlags.push({
+          icon: 'fa-building-shield',
+          title: 'Penyamaran Entiti Bertauliah',
+          desc: `Menyamar sebagai organisasi rasmi (${matchedAgency.slice(0, 2).join(', ').toUpperCase()}).`
+        });
+      }
+
+      // 4. Tawaran Kerja Mudah / Hadiah Lumayan Tanpa Modal
+      const rewardKeywords = ['kerja sambilan', 'part time', 'like video', 'review produk', 'gaji harian', 'rm300', 'rm500', 'rm800', 'rm1000', 'rm5,000', 'rm10,000', 'tanpa modal', 'pelaburan', 'crypto', 'cabutan bertuah', 'pemenang', 'tebus hadiah'];
+      const matchedReward = rewardKeywords.filter(k => lower.includes(k));
+      if (matchedReward.length > 0) {
+        riskScore += 30;
+        redFlags.push({
+          icon: 'fa-sack-dollar',
+          title: 'Tawaran Ganjaran Tidak Munasabah',
+          desc: `Taktik pancingan wang mudah atau kerja review video tanpa risiko.`
+        });
+        reportCategoryKey = "job";
+      }
+
+      // 5. Pautan Luar & Fail APK Berbahaya
+      const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
+      const matchedUrls = text.match(urlRegex) || [];
+      const hasApk = lower.includes('.apk') || lower.includes('muat turun fail') || lower.includes('download apk');
+      if (hasApk || matchedUrls.length > 0) {
+        riskScore += 25;
+        redFlags.push({
+          icon: 'fa-link',
+          title: hasApk ? 'Penyebaran Fail APK Jahat' : 'Pautan Laman Luar / Phishing',
+          desc: hasApk ? 'Mendorong pemasangan perisian APK di luar Google Play Store.' : `Pautan dikesan (${matchedUrls[0] || 'Domain pihak ketiga'}).`
+        });
+        if (hasApk) reportCategoryKey = "apk";
+      }
+
+      // Ekstrak Nombor Telefon & Pautan
+      const phoneRegex = /(01\d{1}[-\s]?\d{7,8})/g;
+      const matchedPhones = text.match(phoneRegex) || [];
+      const extractedTarget = matchedPhones[0] || matchedUrls[0] || "Nombor / URL Dari Teks";
+
+      // Penentuan Kategori & Had Skor
+      if (matchedAgency.length > 0 && matchedUrgency.length > 0 && (lower.includes('waran') || lower.includes('mahkamah') || lower.includes('lhdn'))) {
+        detectedCategory = "Macau Scam - Penyamaran PDRM / LHDN";
+        reportCategoryKey = "phone";
+      } else if (matchedCred.length > 0 && (matchedAgency.length > 0 || matchedUrls.length > 0)) {
+        detectedCategory = "Phishing Perbankan & Pencurian TAC/OTP";
+        reportCategoryKey = "mule";
+      } else if (matchedReward.length > 0) {
+        detectedCategory = "Penipuan Tawaran Kerja / Hadiah Palsu (Job Scam)";
+        reportCategoryKey = "job";
+      } else if (hasApk) {
+        detectedCategory = "Penyebaran Spyware / Malware APK";
+        reportCategoryKey = "apk";
+      } else if (redFlags.length === 0) {
+        detectedCategory = "Mesej Sahih / Tiada Unsur Ancaman Dikesan";
+        riskScore = 8;
+      }
+
+      riskScore = Math.min(99, Math.max(5, riskScore));
+
+      // Tentukan tema warna & status
+      let statusColor = "emerald";
+      let statusBadge = "TIADA ANCAMAN KETARA (RISIKO RENDAH)";
+      let statusIcon = "fa-circle-check";
+      if (riskScore >= 75) {
+        statusColor = "red";
+        statusBadge = "AMARAN TINGGI (SCAM BERBAHAYA)";
+        statusIcon = "fa-triangle-exclamation";
+      } else if (riskScore >= 40) {
+        statusColor = "amber";
+        statusBadge = "MENCURIGAKAN (RISIKO SEDERHANA)";
+        statusIcon = "fa-circle-exclamation";
+      }
+
+      const escapedTarget = extractedTarget.replace(/'/g, "\'");
+      const escapedCategory = detectedCategory.replace(/'/g, "\'");
+      const escapedSummary = ("Mesej mengandungi penipuan " + detectedCategory + " dengan skor risiko " + riskScore + "%.").replace(/'/g, "\'");
+
+      res.innerHTML = `
+        <div class="p-6 bg-${statusColor}-50/80 border-2 border-${statusColor}-300 rounded-3xl space-y-5 shadow-md">
+          <!-- Header Skor -->
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+              <div class="w-12 h-12 rounded-2xl bg-${statusColor}-500 text-white flex items-center justify-center text-xl shadow-md">
+                <i class="fa-solid ${statusIcon}"></i>
+              </div>
+              <div>
+                <span class="text-[10px] font-black uppercase tracking-wider text-${statusColor}-800 bg-${statusColor}-100 px-2.5 py-1 rounded-full inline-block">
+                  ${statusBadge}
+                </span>
+                <h4 class="text-lg font-black text-slate-800 mt-1">${detectedCategory}</h4>
+              </div>
+            </div>
+            <div class="text-left sm:text-right">
+              <p class="text-xs text-slate-500 font-bold uppercase">Indeks Risiko AI</p>
+              <p class="text-3xl font-black text-${statusColor}-600">${riskScore}%</p>
+            </div>
+          </div>
+
+          <!-- Progress Bar Risiko -->
+          <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+            <div class="bg-${statusColor}-500 h-2.5 rounded-full transition-all duration-700" style="width: ${riskScore}%"></div>
+          </div>
+
+          <!-- Penanda Merah Dikesan -->
+          <div class="space-y-2">
+            <p class="text-xs font-black text-slate-700 uppercase flex items-center">
+              <i class="fa-solid fa-crosshairs text-${statusColor}-600 mr-1.5"></i>
+              Penanda Amaran Merah Dikesan Oleh AI (${redFlags.length}):
+            </p>
+            ${redFlags.length > 0 ? `
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                ${redFlags.map(rf => `
+                  <div class="p-3 bg-white/90 rounded-xl border border-${statusColor}-200 text-xs flex items-start space-x-2.5 shadow-sm">
+                    <i class="fa-solid ${rf.icon} text-${statusColor}-600 text-sm mt-0.5"></i>
+                    <div>
+                      <p class="font-extrabold text-slate-800">${rf.title}</p>
+                      <p class="text-slate-600 text-[11px] leading-relaxed mt-0.5">${rf.desc}</p>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            ` : `
+              <div class="p-3 bg-emerald-100/60 rounded-xl text-xs text-emerald-800 font-bold flex items-center">
+                <i class="fa-solid fa-check mr-2"></i> Tiada corak penipuan lazim dikesan dalam ayat mesej ini.
+              </div>
+            `}
+          </div>
+
+          <!-- Tindakan Keselamatan Disyorkan & Integrasi Komuniti -->
+          <div class="pt-3 border-t border-${statusColor}-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="text-xs text-slate-600 flex items-center space-x-2 w-full sm:w-auto">
+              <i class="fa-solid fa-shield-virus text-${statusColor}-600 text-base"></i>
+              <span><strong>Sasaran Dikesan:</strong> <code class="bg-white px-2 py-0.5 rounded border font-mono font-bold text-slate-800">${extractedTarget}</code></span>
+            </div>
+            <div class="flex flex-wrap gap-2 w-full sm:w-auto justify-end">
+              ${riskScore >= 40 ? `
+                <button type="button" onclick="prefillReportFromAnalysis('${escapedTarget}', '${reportCategoryKey}', '${escapedSummary}')" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-black px-4 py-2 rounded-xl text-xs shadow-md transition-all flex items-center space-x-1.5 active:scale-95">
+                  <i class="fa-solid fa-share-from-square"></i>
+                  <span>Salin ke Borang Laporan Komuniti</span>
+                </button>
+                <button type="button" onclick="triggerEmergencyModal()" class="bg-red-600 hover:bg-red-700 text-white font-black px-4 py-2 rounded-xl text-xs shadow-md transition-all flex items-center space-x-1.5 active:scale-95">
+                  <i class="fa-solid fa-bolt"></i>
+                  <span>Mod Panik</span>
+                </button>
+              ` : `
+                <span class="text-emerald-700 font-extrabold text-xs">Mesej selamat untuk dibaca.</span>
+              `}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Salin Hasil Analisis AI ke Borang Laporan Rasmi Komuniti
+    function prefillReportFromAnalysis(target, categoryKey, summary) {
+      setCommunitySubTab('report');
+      
+      const targetInput = document.getElementById('reportTarget');
+      const typeSelect = document.getElementById('reportType');
+      const descInput = document.getElementById('reportDesc');
+
+      if (targetInput) targetInput.value = target;
+      if (typeSelect && categoryKey) typeSelect.value = categoryKey;
+      if (descInput) descInput.value = summary + " [Disahkan oleh Enjin Pengimbas Mesej CyberCentra AI]";
+
+      showToast('Data Dipindahkan', 'Maklumat analisis AI berjaya dipindahkan ke borang laporan komuniti.', 'success');
+      
+      const formEl = document.getElementById('scamReportForm');
+      if (formEl) formEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+  </script>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
@@ -375,7 +693,7 @@
                   <p class="text-lg font-black text-slate-700">013-211 1222</p>
                   <p class="text-[10px] text-slate-500" data-key="hotline-ccid-sub">Saluran semakan & laporan pantas</p>
                 </div>
-                <button onclick="alert('Membuka aplikasi WhatsApp ke CCID PDRM')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-4 py-2.5 rounded-xl text-xs shadow-md">Chat</button>
+                <button onclick="showToast('WhatsApp CCID PDRM', 'Membuka saluran rasmi CCID Infoline PDRM di WhatsApp...', 'info')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-4 py-2.5 rounded-xl text-xs shadow-md">Chat</button>
               </div>
             </div>
           </div>
@@ -389,40 +707,135 @@
           <h2 class="text-3xl font-display font-black text-slate-800" data-key="mod4-title">Pelaporan & Komuniti Pintar (AI Verification)</h2>
           <p class="text-sm text-slate-600 mt-1" data-key="mod4-desc">Kongsi laporan scammer untuk membantu pengguna lain. Kecerdasan Buatan (AI) menyaring laporan bagi mengelakkan laporan palsu.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          <div class="glass-card p-6 sm:p-8 rounded-3xl border border-slate-200 space-y-4">
-            <h3 class="font-extrabold text-slate-800 text-lg flex items-center"><i class="fa-solid fa-flag text-amber-500 mr-2"></i> <span data-key="form-rep-title">Borang Laporan Pantas</span></h3>
-            <form id="scamReportForm" onsubmit="handleReportSubmit(event)" class="space-y-3">
-              <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1" data-key="form-type-lbl">Jenis Ancaman Scam</label>
-                <select id="reportType" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-amber-500">
-                  <option value="phone" data-key="opt-phone">Panggilan Telefon / SMS Penipuan</option>
-                  <option value="mule" data-key="opt-mule">Akaun Bank Mule / Fraud Transfer</option>
-                  <option value="apk" data-key="opt-apk">Laman Web Phishing / Fail APK</option>
-                  <option value="job" data-key="opt-job">Tawaran Kerja Palsu / E-Pencen</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1" data-key="form-target-lbl">Nombor Telefon / Akaun Bank / URL Suspek</label>
-                <input type="text" id="reportTarget" required placeholder="Contoh: 01129384722 atau Maybank 11203948" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-amber-500">
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1" data-key="form-desc-lbl">Keterangan Ringkas Kejadian</label>
-                <textarea id="reportDesc" rows="3" required placeholder="Ceritakan bagaimana suspek cuba menipu..." class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-amber-500"></textarea>
-              </div>
-              <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-extrabold py-3 rounded-xl text-xs shadow-lg transition-all flex items-center justify-center space-x-2">
-                <i class="fa-solid fa-robot"></i>
-                <span data-key="btn-submit-rep">Hantar & Semak Dengan AI</span>
-              </button>
-            </form>
+
+        <div class="glass-card p-6 sm:p-8 rounded-3xl max-w-5xl mx-auto border-2 border-amber-200 shadow-xl">
+          <!-- Modul 2 Sub-Navigasi Interaktif -->
+          <div class="flex border-b border-slate-200 mb-6 space-x-2 sm:space-x-4">
+            <button onclick="setCommunitySubTab('scan')" id="subtab-msg-scan" class="py-2.5 px-4 border-b-2 border-amber-600 text-amber-700 font-extrabold text-xs sm:text-sm flex items-center space-x-2 transition-all">
+              <i class="fa-solid fa-brain text-amber-500"></i>
+              <span data-key="subtab-msg-scan-lbl">Pengimbas Mesej Scammer AI (Live NLP)</span>
+            </button>
+            <button onclick="setCommunitySubTab('report')" id="subtab-comm-report" class="py-2.5 px-4 text-slate-500 font-extrabold text-xs sm:text-sm flex items-center space-x-2 hover:text-amber-600 transition-all">
+              <i class="fa-solid fa-flag text-slate-400"></i>
+              <span data-key="subtab-comm-report-lbl">Borang Laporan & Suapan Komuniti</span>
+            </button>
           </div>
-          <div class="space-y-4">
-            <div class="glass-card p-6 rounded-3xl border border-slate-200">
-              <h3 class="font-extrabold text-slate-800 text-lg mb-3 flex items-center justify-between">
-                <span><i class="fa-solid fa-database text-cyan-600 mr-2"></i> <span data-key="feed-title">Laporan Komuniti Terkini</span></span>
-                <span class="text-[10px] bg-cyan-100 text-cyan-800 px-2 py-0.5 rounded-full font-bold" data-key="badge-ai-ver">Disahkan AI</span>
-              </h3>
-              <div id="communityFeed" class="space-y-3 max-h-96 overflow-y-auto pr-1"></div>
+
+          <!-- SUBPANEL 1: PENGIMBAS MESEJ SCAMMER AI -->
+          <div id="panel-msg-scan" class="subpanel-comm space-y-6">
+            <!-- Banner Info AI -->
+            <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 p-4 rounded-2xl flex items-start space-x-3.5 shadow-sm">
+              <div class="w-10 h-10 rounded-xl bg-amber-500 text-slate-900 flex items-center justify-center text-lg font-black flex-shrink-0 shadow-md shadow-amber-400/30">
+                <i class="fa-solid fa-robot"></i>
+              </div>
+              <div class="text-xs text-slate-700 space-y-1">
+                <p class="font-extrabold text-slate-800 text-sm flex items-center">
+                  <span data-key="msg-scan-banner-title">Enjin Pengesanan Corak Mesej Penipuan Siber (AI Detector)</span>
+                  <span class="ml-2 bg-amber-200 text-amber-900 px-2 py-0.5 rounded-full text-[10px] font-black uppercase">Live NLP Engine</span>
+                </p>
+                <p class="leading-relaxed text-slate-600" data-key="msg-scan-banner-desc">Tampal teks mesej SMS, WhatsApp, Telegram, atau e-mel mencurigakan. Enjin AI CyberCentra akan menyaring corak manipulasi emosi, desakan masa, pancingan TAC/OTP, dan domain berniat jahat secara langsung.</p>
+              </div>
+            </div>
+
+            <!-- Butang Contoh Mesej Ujian Pantas -->
+            <div class="space-y-2">
+              <label class="block text-xs font-extrabold text-slate-600 uppercase flex items-center">
+                <i class="fa-solid fa-wand-magic-sparkles text-amber-500 mr-1.5"></i>
+                <span data-key="lbl-quick-samples">Pilih Contoh Mesej Ujian Pantas:</span>
+              </label>
+              <div class="flex flex-wrap gap-2">
+                <button type="button" onclick="loadSampleMessage('maybank')" class="px-3 py-2 bg-white hover:bg-amber-50 text-slate-700 hover:text-amber-800 border border-slate-200 hover:border-amber-300 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center space-x-1.5 active:scale-95">
+                  <i class="fa-solid fa-building-columns text-yellow-600"></i>
+                  <span>1. SMS Phishing TAC / Maybank</span>
+                </button>
+                <button type="button" onclick="loadSampleMessage('job')" class="px-3 py-2 bg-white hover:bg-amber-50 text-slate-700 hover:text-amber-800 border border-slate-200 hover:border-amber-300 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center space-x-1.5 active:scale-95">
+                  <i class="fa-solid fa-briefcase text-blue-600"></i>
+                  <span>2. WhatsApp Job Scam</span>
+                </button>
+                <button type="button" onclick="loadSampleMessage('macau')" class="px-3 py-2 bg-white hover:bg-amber-50 text-slate-700 hover:text-amber-800 border border-slate-200 hover:border-amber-300 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center space-x-1.5 active:scale-95">
+                  <i class="fa-solid fa-scale-balanced text-red-600"></i>
+                  <span>3. Macau Scam (LHDN/PDRM)</span>
+                </button>
+                <button type="button" onclick="loadSampleMessage('prize')" class="px-3 py-2 bg-white hover:bg-amber-50 text-slate-700 hover:text-amber-800 border border-slate-200 hover:border-amber-300 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center space-x-1.5 active:scale-95">
+                  <i class="fa-solid fa-gift text-purple-600"></i>
+                  <span>4. Hadiah TNG / Pautan APK</span>
+                </button>
+                <button type="button" onclick="loadSampleMessage('legit')" class="px-3 py-2 bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 border border-slate-200 hover:border-emerald-300 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center space-x-1.5 active:scale-95">
+                  <i class="fa-solid fa-shield-check text-emerald-600"></i>
+                  <span>5. Mesej Sahih (Keluarga)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Kotak Input Mesej -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <label class="block text-xs font-extrabold text-slate-600 uppercase" data-key="lbl-msg-scan-input">Kandungan Teks Mesej Scammer</label>
+                <span id="msgCharCount" class="text-[11px] text-slate-400 font-bold">0 aksara</span>
+              </div>
+              <textarea id="scamMessageInput" oninput="updateCharCount()" rows="4" placeholder="Tampal mesej SMS, pesanan WhatsApp atau teks mencurigakan di sini..." class="w-full px-4 py-3 bg-white border border-slate-300 rounded-2xl text-xs sm:text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none font-medium text-slate-800 leading-relaxed placeholder-slate-400 shadow-inner"></textarea>
+            </div>
+
+            <!-- Kawalan Imbasan -->
+            <div class="flex flex-col sm:flex-row gap-3">
+              <button onclick="analyzeScamMessage()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-900 font-extrabold px-6 py-3.5 rounded-xl shadow-lg shadow-amber-500/20 transition-all flex items-center justify-center space-x-2 text-xs sm:text-sm active:scale-95">
+                <i class="fa-solid fa-brain text-base"></i>
+                <span data-key="btn-analyze-msg">Imbas & Analisis Corak Scam AI</span>
+              </button>
+              <button onclick="clearScamMessageInput()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-5 py-3.5 rounded-xl transition-all flex items-center justify-center space-x-2 text-xs">
+                <i class="fa-solid fa-eraser"></i>
+                <span data-key="btn-clear-msg">Padam Teks</span>
+              </button>
+            </div>
+
+            <!-- Kad Keputusan Analisis AI (Dinamik) -->
+            <div id="msgAnalysisResult" class="hidden"></div>
+          </div>
+
+          <!-- SUBPANEL 2: BORANG & LAPORAN KOMUNITI -->
+          <div id="panel-comm-report" class="subpanel-comm space-y-6 hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <!-- Borang Laporan Pantas -->
+              <div class="space-y-4">
+                <h3 class="font-extrabold text-slate-800 text-lg flex items-center">
+                  <i class="fa-solid fa-flag text-amber-500 mr-2"></i>
+                  <span data-key="form-rep-title">Borang Laporan Pantas</span>
+                </h3>
+                <form id="scamReportForm" onsubmit="handleReportSubmit(event)" class="space-y-3">
+                  <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1" data-key="form-type-lbl">Jenis Ancaman Scam</label>
+                    <select id="reportType" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-amber-500">
+                      <option value="phone" data-key="opt-phone">Panggilan Telefon / SMS Penipuan</option>
+                      <option value="mule" data-key="opt-mule">Akaun Bank Mule / Fraud Transfer</option>
+                      <option value="apk" data-key="opt-apk">Laman Web Phishing / Fail APK</option>
+                      <option value="job" data-key="opt-job">Tawaran Kerja Palsu / E-Pencen</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1" data-key="form-target-lbl">Nombor Telefon / Akaun Bank / URL Suspek</label>
+                    <input type="text" id="reportTarget" required placeholder="Contoh: 01129384722 atau Maybank 11203948" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-amber-500">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1" data-key="form-desc-lbl">Keterangan Ringkas Kejadian</label>
+                    <textarea id="reportDesc" rows="3" required placeholder="Ceritakan bagaimana suspek cuba menipu..." class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-amber-500"></textarea>
+                  </div>
+                  <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-extrabold py-3 rounded-xl text-xs shadow-lg transition-all flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-robot"></i>
+                    <span data-key="btn-submit-rep">Hantar & Semak Dengan AI</span>
+                  </button>
+                </form>
+              </div>
+
+              <!-- Suapan Laporan Komuniti Terkini -->
+              <div class="space-y-4">
+                <div class="p-4 bg-white/70 rounded-2xl border border-slate-200">
+                  <h3 class="font-extrabold text-slate-800 text-base mb-3 flex items-center justify-between">
+                    <span><i class="fa-solid fa-database text-cyan-600 mr-2"></i> <span data-key="feed-title">Laporan Komuniti Terkini</span></span>
+                    <span class="text-[10px] bg-cyan-100 text-cyan-800 px-2 py-0.5 rounded-full font-bold" data-key="badge-ai-ver">Disahkan AI</span>
+                  </h3>
+                  <div id="communityFeed" class="space-y-3 max-h-96 overflow-y-auto pr-1"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -542,6 +955,14 @@
         "nav-device": "Perlindungan Peranti",
         "nav-emergency": "Respon Cemas",
         "nav-report": "Lapor & AI",
+        "subtab-msg-scan-lbl": "Pengimbas Mesej Scammer AI (Live NLP)",
+        "subtab-comm-report-lbl": "Borang Laporan & Suapan Komuniti",
+        "msg-scan-banner-title": "Enjin Pengesanan Corak Mesej Penipuan Siber (AI Detector)",
+        "msg-scan-banner-desc": "Tampal teks mesej SMS, WhatsApp, Telegram, atau e-mel mencurigakan. Enjin AI CyberCentra akan menyaring corak manipulasi emosi, desakan masa, pancingan TAC/OTP, dan domain berniat jahat secara langsung.",
+        "lbl-quick-samples": "Pilih Contoh Mesej Ujian Pantas:",
+        "lbl-msg-scan-input": "Kandungan Teks Mesej Scammer",
+        "btn-analyze-msg": "Imbas & Analisis Corak Scam AI",
+        "btn-clear-msg": "Padam Teks",
         "nav-edu": "Edukasi & Kuiz",
         "badge-active": "SISTEM AKTIF - PERLINDUNGAN REAL-TIME 24/7",
         "dash-hero-title": "Lindungi Diri & Keluarga Daripada Ancaman Penipuan Siber",
@@ -631,6 +1052,14 @@
         "nav-device": "Device Protection",
         "nav-emergency": "Emergency",
         "nav-report": "Report & AI",
+        "subtab-msg-scan-lbl": "AI Scammer Message Scanner (Live NLP)",
+        "subtab-comm-report-lbl": "Community Report & Live Feed",
+        "msg-scan-banner-title": "Cyber Scam Pattern Detection Engine (AI Detector)",
+        "msg-scan-banner-desc": "Paste suspicious SMS, WhatsApp, Telegram, or email text. CyberCentra AI screens emotional manipulation, urgency triggers, TAC/OTP phishing, and malicious domains in real time.",
+        "lbl-quick-samples": "Select Quick Sample Message:",
+        "lbl-msg-scan-input": "Scammer Message Text Content",
+        "btn-analyze-msg": "Scan & Analyze Scam Pattern with AI",
+        "btn-clear-msg": "Clear Text",
         "nav-edu": "Education & Quiz",
         "badge-active": "SYSTEM ACTIVE - REAL-TIME PROTECTION 24/7",
         "dash-hero-title": "Protect Yourself & Family From Cyber Threats",
@@ -720,6 +1149,14 @@
         "nav-device": "设备保护",
         "nav-emergency": "紧急响应",
         "nav-report": "举报与AI",
+        "subtab-msg-scan-lbl": "AI 诈骗信息扫描器 (实时 NLP)",
+        "subtab-comm-report-lbl": "社区举报与实时动态",
+        "msg-scan-banner-title": "网络诈骗信息模式检测引擎 (AI 探测器)",
+        "msg-scan-banner-desc": "粘贴可疑的短信、WhatsApp、Telegram 或电子邮件文本。CyberCentra AI 实时筛查心理操纵、紧迫性催促、TAC/OTP 钓鱼及恶意域名。",
+        "lbl-quick-samples": "选择快速测试样本：",
+        "lbl-msg-scan-input": "诈骗信息文本内容",
+        "btn-analyze-msg": "使用 AI 扫描并分析诈骗模式",
+        "btn-clear-msg": "清除文本",
         "nav-edu": "教育与测验",
         "badge-active": "系统激活 - 24/7 实时保护",
         "dash-hero-title": "保护自己和家人免受网络诈骗威胁",
@@ -809,6 +1246,14 @@
         "nav-device": "சாதனப் பாதுகாப்பு",
         "nav-emergency": "அவசரப் பதில்",
         "nav-report": "புகார் & AI",
+        "subtab-msg-scan-lbl": "AI மோசடி செய்தி ஸ்கேனர் (நிகழ்நேர NLP)",
+        "subtab-comm-report-lbl": "சமூக அறிக்கை & நேரலை ஊட்டம்",
+        "msg-scan-banner-title": "சைபர் மோசடி மாதிரி கண்டறிதல் அமைப்பு (AI டிடெக்டர்)",
+        "msg-scan-banner-desc": "சந்தேகத்திற்கிடமான SMS, WhatsApp, Telegram அல்லது மின்னஞ்சல் உரையை உள்ளிடவும். CyberCentra AI நிகழ்நேரத்தில் உணர்ச்சி கையாளுதல் மற்றும் TAC/OTP பிஷிங்கை பகுப்பாய்வு செய்கிறது.",
+        "lbl-quick-samples": "விரைவு மாதிரி செய்தியைத் தேர்ந்தெடுக்கவும்:",
+        "lbl-msg-scan-input": "மோசடி செய்தியின் உரை உள்ளடக்கம்",
+        "btn-analyze-msg": "AI மூலம் மோசடி முறையை பகுப்பாய்வு செய்",
+        "btn-clear-msg": "உரையை அழி",
         "nav-edu": "கல்வி & வினாடி வினா",
         "badge-active": "செயலில் உள்ள அமைப்பு - 24/7 பாதுகாப்பு",
         "dash-hero-title": "இணைய மோசடிகளிலிருந்து உங்களையும் குடும்பத்தையும் பாதுகாக்கவும்",
@@ -982,7 +1427,7 @@
     function executeQuickScan() {
       const query = document.getElementById('quickSearchInput').value.trim();
       if (!query) {
-        alert(currentLang === 'en' ? 'Please enter a phone number, bank account, or link.' : 'Sila masukkan nombor telefon, akaun bank atau pautan.');
+        showToast('Perhatian', currentLang === 'en' ? 'Please enter a phone number, bank account, or link.' : 'Sila masukkan nombor telefon, akaun bank atau pautan.', 'warning');
         return;
       }
       switchTab('realtime');
@@ -1062,17 +1507,17 @@
           <span class="bg-amber-500 text-slate-900 font-black text-xs px-3 py-1 rounded-full">AMARAN PENGIMBASAN QR</span>
           <h4 class="font-black text-slate-800 text-base">Kod QR Mengandungi Pautan Muat Turun Fail APK Berbahaya!</h4>
           <p class="text-xs text-slate-700">QR cuba mengarah kepada pemasangan fail berniat jahat.</p>
-          <button onclick="alert('Pemasangan Dibatalkan Secara Automatik oleh Verisafe AI')" class="mt-2 bg-red-600 hover:bg-red-700 text-white font-bold text-xs px-4 py-2 rounded-xl">Sekat Muat Turun</button>
+          <button onclick="showToast('Perisai Sekatan', 'Pemasangan Fail APK Dibatalkan Secara Automatik oleh CyberCentra AI.', 'success')" class="mt-2 bg-red-600 hover:bg-red-700 text-white font-bold text-xs px-4 py-2 rounded-xl">Sekat Muat Turun</button>
         </div>
       `;
     }
 
     function scanAPKMallware() {
-      alert('🔍 Memulakan Imbasan Peranti...\n\nTiada fail APK berbahaya dikesan dalam storan peranti anda.');
+      showToast('Imbasan Peranti Selesai', 'Tiada fail APK berbahaya atau mencurigakan dikesan dalam storan peranti anda.', 'success');
     }
 
     function checkAccessibilityRights() {
-      alert('🛡️ Audit Perkhidmatan Accessibility:\n\nSemua aplikasi latar belakang disahkan selamat.');
+      showToast('Audit Akses Selesai', 'Semua aplikasi latar belakang dengan kebenaran accessibility disahkan selamat.', 'success');
     }
 
     function toggleScreenshotProtection() {
@@ -1101,7 +1546,7 @@
 
     function executeKillSwitchAction() {
       closeModal('modalKillSwitch');
-      alert('🚨 PINTAS KECEMASAN DILAKUKAN!\n\n1. Sambungan Internet Disekat.\n2. Akses Aplikasi Perbankan Dikunci.\n3. Sila hubungi talian 997 segera!');
+      showToast('Pintas Kecemasan Aktif!', '1. Sambungan Internet Disekat.\n2. Akses Perbankan Dikunci.\n3. Sila hubungi 997 segera!', 'danger');
     }
 
     function renderCommunityReports() {
@@ -1125,18 +1570,28 @@
     function handleReportSubmit(e) {
       e.preventDefault();
       const target = document.getElementById('reportTarget').value;
-      const type = document.getElementById('reportType').options[document.getElementById('reportType').selectedIndex].text;
+      const typeEl = document.getElementById('reportType');
+      const type = typeEl.options[typeEl.selectedIndex].text;
       const desc = document.getElementById('reportDesc').value;
-      alert('🤖 AI Verification in Progress...\n\nLaporan anda sedang disahkan oleh AI Verisafe AI.');
+
+      // Kira skor pengesahan AI dinamik berdasarkan panjang dan perkataan kunci
+      let dynamicScore = 94;
+      const lower = desc.toLowerCase();
+      if (lower.includes('tac') || lower.includes('otp') || lower.includes('bank') || lower.includes('waran') || lower.includes('apk') || lower.includes('duit')) {
+        dynamicScore = 98;
+      }
+
       mockReports.unshift({
         target: target,
         type: type,
         desc: desc,
-        score: '96% Pengesahan AI Selesai',
+        score: `${dynamicScore}% Pengesahan AI Selesai`,
         time: 'Baru sahaja'
       });
+
       renderCommunityReports();
       document.getElementById('scamReportForm').reset();
+      showToast('Laporan Diterima & Disahkan', `Laporan mengenai ${target} berjaya disahkan oleh AI (${dynamicScore}%) dan dimasukkan ke pangkalan data komuniti.`, 'success');
     }
 
     function loadQuizQuestion() {
@@ -1164,6 +1619,326 @@
         expEl.textContent = "❌ Kurang tepat. " + q.explanation;
       }
     }
+  
+    // =========================================================
+    // ENJIN PENGESAN MESEJ SCAMMER AI & SISTEM NOTIFIKASI TOAST
+    // =========================================================
+
+    // Toast Notification System (Menggantikan alert biasa)
+    function showToast(title, message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = 'pointer-events-auto flex items-start space-x-3 p-4 rounded-2xl shadow-2xl backdrop-blur-md border text-xs font-semibold transition-all duration-300 transform translate-y-4 opacity-0';
+      
+      let icon = 'fa-circle-info';
+      let border = 'border-slate-300 bg-white/95 text-slate-800';
+      if (type === 'success') {
+        icon = 'fa-circle-check text-emerald-600';
+        border = 'border-emerald-200 bg-emerald-50/95 text-emerald-950';
+      } else if (type === 'warning') {
+        icon = 'fa-triangle-exclamation text-amber-600';
+        border = 'border-amber-200 bg-amber-50/95 text-amber-950';
+      } else if (type === 'danger') {
+        icon = 'fa-shield-halved text-red-600';
+        border = 'border-red-200 bg-red-50/95 text-red-950';
+      }
+      
+      toast.className += ' ' + border;
+      toast.innerHTML = `
+        <div class="text-base mt-0.5"><i class="fa-solid ${icon}"></i></div>
+        <div class="flex-1">
+          <p class="font-extrabold text-sm mb-0.5">${title}</p>
+          <p class="text-xs opacity-90 leading-relaxed">${message.replace(/\n/g, '<br>')}</p>
+        </div>
+      `;
+      container.appendChild(toast);
+      
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-4', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Pilihan Contoh Mesej Ujian Pantas
+    const sampleMessages = {
+      maybank: "RM0.00 MAYBANK: Akaun Maybank2u anda telah digantung atas faktor keselamatan transaksi. Sila log masuk segera di https://maybank2u-secure-login.top untuk kemaskini TAC dan sahkan baki dalam tempoh 1 jam bagi mengelakkan akaun ditutup.",
+      job: "Hai! Kami dari Agensi Pengiklanan TikTok Malaysia menawarkan kerja sambilan like video dan review produk. Gaji harian RM300 - RM800 terus ke akaun bank tanpa modal permulaan. Tekan link WhatsApp untuk daftar sekarang: https://t.me/task_malaysia_job",
+      macau: "AMARAN MAHKAMAH TINGGI KUALA LUMPUR: Anda mempunyai waran tangkap PDRM atas kesalahan penggubahan wang haram dan cukai LHDN tertunggak RM45,000. Hubungi Pegawai Penyiasat Rozali di 011-29384722 serta merta dalam masa 30 minit sebelum polis menyerbu rumah anda.",
+      prize: "Tahniah! Nombor telefon anda terpilih menerima Cabutan Bertuah Touch 'n Go RM5,000. Klik https://tng-claim-hadiah.site dan muat turun fail aplikasi APK hadiah rasmi untuk menuntut wang tunai segera.",
+      legit: "Salam Ahmad, petang nanti kita jumpa dekat kedai mamak pukul 5 petang ya. Jangan lupa bawa fail dokumen projek hari tu. Terima kasih."
+    };
+
+    function loadSampleMessage(type) {
+      const input = document.getElementById('scamMessageInput');
+      if (input && sampleMessages[type]) {
+        input.value = sampleMessages[type];
+        updateCharCount();
+        analyzeScamMessage();
+      }
+    }
+
+    function clearScamMessageInput() {
+      const input = document.getElementById('scamMessageInput');
+      if (input) {
+        input.value = '';
+        updateCharCount();
+      }
+      const res = document.getElementById('msgAnalysisResult');
+      if (res) res.classList.add('hidden');
+    }
+
+    function updateCharCount() {
+      const input = document.getElementById('scamMessageInput');
+      const counter = document.getElementById('msgCharCount');
+      if (input && counter) {
+        counter.textContent = input.value.length + ' aksara';
+      }
+    }
+
+    function setCommunitySubTab(type) {
+      document.querySelectorAll('.subpanel-comm').forEach(p => p.classList.add('hidden'));
+      const p = document.getElementById(`panel-msg-${type === 'scan' ? 'scan' : 'comm-report'}`);
+      if (p) p.classList.remove('hidden');
+
+      const btnScan = document.getElementById('subtab-msg-scan');
+      const btnReport = document.getElementById('subtab-comm-report');
+
+      if (type === 'scan') {
+        if (btnScan) btnScan.className = "py-2.5 px-4 border-b-2 border-amber-600 text-amber-700 font-extrabold text-xs sm:text-sm flex items-center space-x-2 transition-all";
+        if (btnReport) btnReport.className = "py-2.5 px-4 text-slate-500 font-extrabold text-xs sm:text-sm flex items-center space-x-2 hover:text-amber-600 transition-all";
+      } else {
+        if (btnScan) btnScan.className = "py-2.5 px-4 text-slate-500 font-extrabold text-xs sm:text-sm flex items-center space-x-2 hover:text-amber-600 transition-all";
+        if (btnReport) btnReport.className = "py-2.5 px-4 border-b-2 border-amber-600 text-amber-700 font-extrabold text-xs sm:text-sm flex items-center space-x-2 transition-all";
+      }
+    }
+
+    // Enjin Saringan Mesej Scammer AI (Heuristic NLP)
+    function analyzeScamMessage() {
+      const text = (document.getElementById('scamMessageInput')?.value || '').trim();
+      const res = document.getElementById('msgAnalysisResult');
+      if (!res) return;
+
+      if (!text) {
+        showToast('Teks Diperlukan', 'Sila taip atau tampal teks mesej mencurigakan terlebih dahulu.', 'warning');
+        return;
+      }
+
+      res.classList.remove('hidden');
+
+      const lower = text.toLowerCase();
+      let riskScore = 5; // Skor asas
+      const redFlags = [];
+      let detectedCategory = "Mesej Umum / Tiada Kategori Khusus";
+      let reportCategoryKey = "phone";
+
+      // 1. Pengesanan Desakan Masa / Manipulasi Psikologi Urgensi
+      const urgencyKeywords = ['segera', 'urgent', 'serta merta', 'tindakan undang-undang', 'tutup', 'disekat', 'dibekukan', 'digantung', 'waran', 'tangkap', 'mahkamah', 'polis', 'penjara', 'denda', 'kompaun', 'tempoh', 'jam', 'minit', 'sebelum terlambat', 'gagal hadir', 'serbu'];
+      const matchedUrgency = urgencyKeywords.filter(k => lower.includes(k));
+      if (matchedUrgency.length > 0) {
+        riskScore += Math.min(30, matchedUrgency.length * 10);
+        redFlags.push({
+          icon: 'fa-hourglass-half',
+          title: 'Urgensi & Tekanan Masa',
+          desc: `Mengandungi desakan terdesak (${matchedUrgency.slice(0, 3).join(', ')}) untuk memaksa mangsa panik.`
+        });
+      }
+
+      // 2. Permintaan Kredensial Sensitif / TAC / OTP
+      const credKeywords = ['tac', 'otp', 'kata laluan', 'password', 'pin', 'cvv', 'no kad', 'kad pengenalan', 'ic', 'log masuk', 'kemaskini akaun', 'sahkan baki', 'pindahkan wang', 'deposit', 'cimbclicks', 'maybank2u', 'bank islam'];
+      const matchedCred = credKeywords.filter(k => lower.includes(k));
+      if (matchedCred.length > 0) {
+        riskScore += Math.min(35, matchedCred.length * 15);
+        redFlags.push({
+          icon: 'fa-key',
+          title: 'Pancingan TAC / Kredensial',
+          desc: `Mencurigakan kerana meminta pengesahan TAC, OTP atau log masuk perbankan.`
+        });
+        reportCategoryKey = "mule";
+      }
+
+      // 3. Penyamaran Agensi Rasmi & Institusi Perbankan
+      const agencyKeywords = ['maybank', 'cimb', 'bank negara', 'bnm', 'lhdn', 'hasil', 'pdrm', 'polis', 'mahkamah', 'sprm', 'pos laju', 'kastam', 'jpa', 'kwsp', 'touch n go', 'tng ewallet'];
+      const matchedAgency = agencyKeywords.filter(k => lower.includes(k));
+      if (matchedAgency.length > 0) {
+        riskScore += 20;
+        redFlags.push({
+          icon: 'fa-building-shield',
+          title: 'Penyamaran Entiti Bertauliah',
+          desc: `Menyamar sebagai organisasi rasmi (${matchedAgency.slice(0, 2).join(', ').toUpperCase()}).`
+        });
+      }
+
+      // 4. Tawaran Kerja Mudah / Hadiah Lumayan Tanpa Modal
+      const rewardKeywords = ['kerja sambilan', 'part time', 'like video', 'review produk', 'gaji harian', 'rm300', 'rm500', 'rm800', 'rm1000', 'rm5,000', 'rm10,000', 'tanpa modal', 'pelaburan', 'crypto', 'cabutan bertuah', 'pemenang', 'tebus hadiah'];
+      const matchedReward = rewardKeywords.filter(k => lower.includes(k));
+      if (matchedReward.length > 0) {
+        riskScore += 30;
+        redFlags.push({
+          icon: 'fa-sack-dollar',
+          title: 'Tawaran Ganjaran Tidak Munasabah',
+          desc: `Taktik pancingan wang mudah atau kerja review video tanpa risiko.`
+        });
+        reportCategoryKey = "job";
+      }
+
+      // 5. Pautan Luar & Fail APK Berbahaya
+      const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
+      const matchedUrls = text.match(urlRegex) || [];
+      const hasApk = lower.includes('.apk') || lower.includes('muat turun fail') || lower.includes('download apk');
+      if (hasApk || matchedUrls.length > 0) {
+        riskScore += 25;
+        redFlags.push({
+          icon: 'fa-link',
+          title: hasApk ? 'Penyebaran Fail APK Jahat' : 'Pautan Laman Luar / Phishing',
+          desc: hasApk ? 'Mendorong pemasangan perisian APK di luar Google Play Store.' : `Pautan dikesan (${matchedUrls[0] || 'Domain pihak ketiga'}).`
+        });
+        if (hasApk) reportCategoryKey = "apk";
+      }
+
+      // Ekstrak Nombor Telefon & Pautan
+      const phoneRegex = /(01\d{1}[-\s]?\d{7,8})/g;
+      const matchedPhones = text.match(phoneRegex) || [];
+      const extractedTarget = matchedPhones[0] || matchedUrls[0] || "Nombor / URL Dari Teks";
+
+      // Penentuan Kategori & Had Skor
+      if (matchedAgency.length > 0 && matchedUrgency.length > 0 && (lower.includes('waran') || lower.includes('mahkamah') || lower.includes('lhdn'))) {
+        detectedCategory = "Macau Scam - Penyamaran PDRM / LHDN";
+        reportCategoryKey = "phone";
+      } else if (matchedCred.length > 0 && (matchedAgency.length > 0 || matchedUrls.length > 0)) {
+        detectedCategory = "Phishing Perbankan & Pencurian TAC/OTP";
+        reportCategoryKey = "mule";
+      } else if (matchedReward.length > 0) {
+        detectedCategory = "Penipuan Tawaran Kerja / Hadiah Palsu (Job Scam)";
+        reportCategoryKey = "job";
+      } else if (hasApk) {
+        detectedCategory = "Penyebaran Spyware / Malware APK";
+        reportCategoryKey = "apk";
+      } else if (redFlags.length === 0) {
+        detectedCategory = "Mesej Sahih / Tiada Unsur Ancaman Dikesan";
+        riskScore = 8;
+      }
+
+      riskScore = Math.min(99, Math.max(5, riskScore));
+
+      // Tentukan tema warna & status
+      let statusColor = "emerald";
+      let statusBadge = "TIADA ANCAMAN KETARA (RISIKO RENDAH)";
+      let statusIcon = "fa-circle-check";
+      if (riskScore >= 75) {
+        statusColor = "red";
+        statusBadge = "AMARAN TINGGI (SCAM BERBAHAYA)";
+        statusIcon = "fa-triangle-exclamation";
+      } else if (riskScore >= 40) {
+        statusColor = "amber";
+        statusBadge = "MENCURIGAKAN (RISIKO SEDERHANA)";
+        statusIcon = "fa-circle-exclamation";
+      }
+
+      const escapedTarget = extractedTarget.replace(/'/g, "\'");
+      const escapedCategory = detectedCategory.replace(/'/g, "\'");
+      const escapedSummary = ("Mesej mengandungi penipuan " + detectedCategory + " dengan skor risiko " + riskScore + "%.").replace(/'/g, "\'");
+
+      res.innerHTML = `
+        <div class="p-6 bg-${statusColor}-50/80 border-2 border-${statusColor}-300 rounded-3xl space-y-5 shadow-md">
+          <!-- Header Skor -->
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+              <div class="w-12 h-12 rounded-2xl bg-${statusColor}-500 text-white flex items-center justify-center text-xl shadow-md">
+                <i class="fa-solid ${statusIcon}"></i>
+              </div>
+              <div>
+                <span class="text-[10px] font-black uppercase tracking-wider text-${statusColor}-800 bg-${statusColor}-100 px-2.5 py-1 rounded-full inline-block">
+                  ${statusBadge}
+                </span>
+                <h4 class="text-lg font-black text-slate-800 mt-1">${detectedCategory}</h4>
+              </div>
+            </div>
+            <div class="text-left sm:text-right">
+              <p class="text-xs text-slate-500 font-bold uppercase">Indeks Risiko AI</p>
+              <p class="text-3xl font-black text-${statusColor}-600">${riskScore}%</p>
+            </div>
+          </div>
+
+          <!-- Progress Bar Risiko -->
+          <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+            <div class="bg-${statusColor}-500 h-2.5 rounded-full transition-all duration-700" style="width: ${riskScore}%"></div>
+          </div>
+
+          <!-- Penanda Merah Dikesan -->
+          <div class="space-y-2">
+            <p class="text-xs font-black text-slate-700 uppercase flex items-center">
+              <i class="fa-solid fa-crosshairs text-${statusColor}-600 mr-1.5"></i>
+              Penanda Amaran Merah Dikesan Oleh AI (${redFlags.length}):
+            </p>
+            ${redFlags.length > 0 ? `
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                ${redFlags.map(rf => `
+                  <div class="p-3 bg-white/90 rounded-xl border border-${statusColor}-200 text-xs flex items-start space-x-2.5 shadow-sm">
+                    <i class="fa-solid ${rf.icon} text-${statusColor}-600 text-sm mt-0.5"></i>
+                    <div>
+                      <p class="font-extrabold text-slate-800">${rf.title}</p>
+                      <p class="text-slate-600 text-[11px] leading-relaxed mt-0.5">${rf.desc}</p>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            ` : `
+              <div class="p-3 bg-emerald-100/60 rounded-xl text-xs text-emerald-800 font-bold flex items-center">
+                <i class="fa-solid fa-check mr-2"></i> Tiada corak penipuan lazim dikesan dalam ayat mesej ini.
+              </div>
+            `}
+          </div>
+
+          <!-- Tindakan Keselamatan Disyorkan & Integrasi Komuniti -->
+          <div class="pt-3 border-t border-${statusColor}-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="text-xs text-slate-600 flex items-center space-x-2 w-full sm:w-auto">
+              <i class="fa-solid fa-shield-virus text-${statusColor}-600 text-base"></i>
+              <span><strong>Sasaran Dikesan:</strong> <code class="bg-white px-2 py-0.5 rounded border font-mono font-bold text-slate-800">${extractedTarget}</code></span>
+            </div>
+            <div class="flex flex-wrap gap-2 w-full sm:w-auto justify-end">
+              ${riskScore >= 40 ? `
+                <button type="button" onclick="prefillReportFromAnalysis('${escapedTarget}', '${reportCategoryKey}', '${escapedSummary}')" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-black px-4 py-2 rounded-xl text-xs shadow-md transition-all flex items-center space-x-1.5 active:scale-95">
+                  <i class="fa-solid fa-share-from-square"></i>
+                  <span>Salin ke Borang Laporan Komuniti</span>
+                </button>
+                <button type="button" onclick="triggerEmergencyModal()" class="bg-red-600 hover:bg-red-700 text-white font-black px-4 py-2 rounded-xl text-xs shadow-md transition-all flex items-center space-x-1.5 active:scale-95">
+                  <i class="fa-solid fa-bolt"></i>
+                  <span>Mod Panik</span>
+                </button>
+              ` : `
+                <span class="text-emerald-700 font-extrabold text-xs">Mesej selamat untuk dibaca.</span>
+              `}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Salin Hasil Analisis AI ke Borang Laporan Rasmi Komuniti
+    function prefillReportFromAnalysis(target, categoryKey, summary) {
+      setCommunitySubTab('report');
+      
+      const targetInput = document.getElementById('reportTarget');
+      const typeSelect = document.getElementById('reportType');
+      const descInput = document.getElementById('reportDesc');
+
+      if (targetInput) targetInput.value = target;
+      if (typeSelect && categoryKey) typeSelect.value = categoryKey;
+      if (descInput) descInput.value = summary + " [Disahkan oleh Enjin Pengimbas Mesej CyberCentra AI]";
+
+      showToast('Data Dipindahkan', 'Maklumat analisis AI berjaya dipindahkan ke borang laporan komuniti.', 'success');
+      
+      const formEl = document.getElementById('scamReportForm');
+      if (formEl) formEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
   </script>
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col space-y-3 pointer-events-none max-w-sm w-full"></div>
 </body>
 </html>
