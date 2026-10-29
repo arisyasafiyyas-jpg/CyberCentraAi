@@ -111,7 +111,7 @@
           <!-- Emergency Fast Button -->
           <button onclick="triggerEmergencyModal()" class="top-button pulse-danger bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl font-bold text-xs flex items-center space-x-2 shadow-lg shadow-red-500/40">
             <i class="fa-solid fa-bolt text-yellow-300"></i>
-            <span id="txt-kill-switch-head">PANIK / KILL-SWITCH</span>
+            <span id="txt-kill-switch-head" data-key="kill-switch">PANIK / KILL-SWITCH</span>
           </button>
         </div>
       </div>
@@ -209,7 +209,7 @@
             </div>
             <div>
               <p class="text-xs text-slate-500 font-bold uppercase" data-key="stat-status">Status Sistem</p>
-              <p class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md inline-block mt-1">🟢 100% Dilindungi</p>
+              <p class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md inline-block mt-1" data-key="stat-protected">🟢 100% Dilindungi</p>
             </div>
           </div>
         </div>
@@ -227,8 +227,8 @@
             <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-robot"></i>
             </div>
-            <h3 class="text-lg font-extrabold text-slate-800 mb-2">AI Penganalisis Mesej Scam</h3>
-            <p class="text-slate-600 text-sm">Semak SMS, WhatsApp, atau pautan mencurigakan menggunakan AI Pintar untuk mengesan unsur scam serta-merta.</p>
+            <h3 class="text-lg font-extrabold text-slate-800 mb-2" data-key="card2-title">AI Penganalisis Mesej Scam</h3>
+            <p class="text-slate-600 text-sm" data-key="card2-desc">Semak SMS, WhatsApp, atau pautan mencurigakan menggunakan AI Pintar untuk mengesan unsur scam serta-merta.</p>
           </div>
           <div class="glass-card p-6 rounded-3xl hover:border-purple-400 transition-all cursor-pointer group" onclick="switchTab('protection')">
             <div class="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
@@ -243,29 +243,29 @@
       <!-- TAB 2: EDUKASI & KUIZ -->
       <section id="tab-education" class="tab-content space-y-6">
         <div class="glass-card p-8 rounded-3xl">
-          <h2 class="text-2xl font-black text-slate-800 mb-2"><i class="fa-solid fa-graduation-cap text-indigo-500 mr-2"></i> Edukasi & Kuiz Kesedaran Siber</h2>
-          <p class="text-slate-600 text-sm mb-6">Ketahui jenis-jenis penipuan popular seperti Macau Scam, Phishing, dan Pelaburan Palsu melalui modul interaktif.</p>
+          <h2 class="text-2xl font-black text-slate-800 mb-2"><i class="fa-solid fa-graduation-cap text-indigo-500 mr-2"></i> <span data-key="edu-main-title">Edukasi & Kuiz Kesedaran Siber</span></h2>
+          <p class="text-slate-600 text-sm mb-6" data-key="edu-main-desc">Ketahui jenis-jenis penipuan popular seperti Macau Scam, Phishing, dan Pelaburan Palsu melalui modul interaktif.</p>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div class="p-5 rounded-2xl bg-cyan-50 border border-cyan-200">
-              <h4 class="font-bold text-cyan-900 mb-1">Macau Scam</h4>
-              <p class="text-xs text-slate-600 mb-4">Menyamar sebagai pegawai LHDN, polis, atau mahkamah menakutkan mangsa.</p>
-              <button onclick="alert('Modul Macau Scam dipilih. Sila ikuti nota kesedaran.')" class="bg-cyan-600 text-white text-xs font-bold px-4 py-2 rounded-xl">Baca Modul</button>
+              <h4 class="font-bold text-cyan-900 mb-1" data-key="edu-macau-title">Macau Scam</h4>
+              <p class="text-xs text-slate-600 mb-4" data-key="edu-macau-desc">Menyamar sebagai pegawai LHDN, polis, atau mahkamah menakutkan mangsa.</p>
+              <button onclick="alert('Modul Macau Scam dipilih. Sila ikuti nota kesedaran.')" class="bg-cyan-600 text-white text-xs font-bold px-4 py-2 rounded-xl" data-key="btn-read-module">Baca Modul</button>
             </div>
             <div class="p-5 rounded-2xl bg-amber-50 border border-amber-200">
-              <h4 class="font-bold text-amber-900 mb-1">Phishing & APK</h4>
-              <p class="text-xs text-slate-600 mb-4">Pautan palsu dan fail APK cuci akaun bank melalui SMS/WhatsApp.</p>
-              <button onclick="alert('Modul Phishing dipilih. Sentiasa semak URL rasmi.')" class="bg-amber-600 text-white text-xs font-bold px-4 py-2 rounded-xl">Baca Modul</button>
+              <h4 class="font-bold text-amber-900 mb-1" data-key="edu-phishing-title">Phishing & APK</h4>
+              <p class="text-xs text-slate-600 mb-4" data-key="edu-phishing-desc">Pautan palsu dan fail APK cuci akaun bank melalui SMS/WhatsApp.</p>
+              <button onclick="alert('Modul Phishing dipilih. Sentiasa semak URL rasmi.')" class="bg-amber-600 text-white text-xs font-bold px-4 py-2 rounded-xl" data-key="btn-read-module">Baca Modul</button>
             </div>
             <div class="p-5 rounded-2xl bg-emerald-50 border border-emerald-200">
-              <h4 class="font-bold text-emerald-900 mb-1">Pelaburan Palsu</h4>
-              <p class="text-xs text-slate-600 mb-4">Menjanjikan pulangan lumayan dalam masa singkat tanpa risiko.</p>
-              <button onclick="alert('Modul Pelaburan dipilih. Semak lesen SC Malaysia.')" class="bg-emerald-600 text-white text-xs font-bold px-4 py-2 rounded-xl">Baca Modul</button>
+              <h4 class="font-bold text-emerald-900 mb-1" data-key="edu-invest-title">Pelaburan Palsu</h4>
+              <p class="text-xs text-slate-600 mb-4" data-key="edu-invest-desc">Menjanjikan pulangan lumayan dalam masa singkat tanpa risiko.</p>
+              <button onclick="alert('Modul Pelaburan dipilih. Semak lesen SC Malaysia.')" class="bg-emerald-600 text-white text-xs font-bold px-4 py-2 rounded-xl" data-key="btn-read-module">Baca Modul</button>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- TAB 3: LAPOR & AI (DITAMBAH FEATURE AI SEMAK MESEJ SCAM) -->
+      <!-- TAB 3: LAPOR & AI -->
       <section id="tab-community" class="tab-content space-y-6">
         <div class="glass-card p-8 rounded-3xl">
           <div class="flex items-center space-x-3 mb-4">
@@ -273,22 +273,22 @@
               <i class="fa-solid fa-robot"></i>
             </div>
             <div>
-              <h2 class="text-2xl font-black text-slate-800">AI Penganalisis Mesej & Laporan Scam</h2>
-              <p class="text-slate-600 text-sm">Semak mesej mencurigakan (SMS, WhatsApp, Emel) menggunakan AI untuk mengesan taktik scammer dengan serta-merta.</p>
+              <h2 class="text-2xl font-black text-slate-800" data-key="ai-title">AI Penganalisis Mesej & Laporan Scam</h2>
+              <p class="text-slate-600 text-sm" data-key="ai-desc">Semak mesej mencurigakan (SMS, WhatsApp, Emel) menggunakan AI untuk mengesan taktik scammer dengan serta-merta.</p>
             </div>
           </div>
 
           <!-- AI Message Scanner Box -->
           <div class="bg-gradient-to-br from-slate-900 to-slate-800 p-6 rounded-2xl text-white shadow-xl mb-8">
             <label class="block text-sm font-bold text-amber-400 mb-2">
-              <i class="fa-solid fa-magnifying-glass mr-2"></i> Tampal Mesej atau Pautan Mencurigakan Di Sini:
+              <i class="fa-solid fa-magnifying-glass mr-2"></i> <span data-key="ai-box-label">Tampal Mesej atau Pautan Mencurigakan Di Sini:</span>
             </label>
-            <textarea id="aiMessageInput" rows="4" placeholder="Contoh: 'Tuan/Puan, anda mempunyai saman tertunggak JPJ sila klik pautan http://t.me/jpj-saman untuk semakan...'" class="w-full p-4 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm mb-4"></textarea>
+            <textarea id="aiMessageInput" rows="4" data-key-placeholder="ai-placeholder" placeholder="Contoh: 'Tuan/Puan, anda mempunyai saman tertunggak JPJ sila klik pautan http://t.me/jpj-saman untuk semakan...'" class="w-full p-4 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm mb-4"></textarea>
             <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <span class="text-xs text-slate-400"><i class="fa-solid fa-shield-heart text-emerald-400 mr-1"></i> AI dilatih dengan ribuan kes arkib scam Malaysia.</span>
+              <span class="text-xs text-slate-400" data-key="ai-note"><i class="fa-solid fa-shield-heart text-emerald-400 mr-1"></i> AI dilatih dengan ribuan kes arkib scam Malaysia.</span>
               <button onclick="analyzeMessageWithAI()" class="w-full sm:w-auto bg-amber-400 hover:bg-amber-300 text-slate-900 font-extrabold px-6 py-3 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <span>Analisis AI Sekarang</span>
+                <span data-key="ai-btn-analyze">Analisis AI Sekarang</span>
               </button>
             </div>
 
@@ -299,28 +299,28 @@
           </div>
 
           <!-- Community Scam Report Form -->
-          <h3 class="text-lg font-bold text-slate-800 mb-3"><i class="fa-solid fa-bullhorn text-amber-500 mr-2"></i> Laporkan Sindiket Penipuan Baharu</h3>
+          <h3 class="text-lg font-bold text-slate-800 mb-3"><i class="fa-solid fa-bullhorn text-amber-500 mr-2"></i> <span data-key="report-title">Laporkan Sindiket Penipuan Baharu</span></h3>
           <form onsubmit="submitReport(event)" class="space-y-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1">Nombor Telefon / Akaun Suspek</label>
+                <label class="block text-xs font-bold text-slate-600 mb-1" data-key="report-label-phone">Nombor Telefon / Akaun Suspek</label>
                 <input type="text" id="reportPhone" required placeholder="Cth: 012-3456789 / 1234567890" class="w-full p-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
               </div>
               <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1">Kategori Scam</label>
+                <label class="block text-xs font-bold text-slate-600 mb-1" data-key="report-label-cat">Kategori Scam</label>
                 <select id="reportCategory" class="w-full p-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
-                  <option value="Macau Scam">Macau Scam / Menyamar Pihak Berkuasa</option>
-                  <option value="Phishing APK">Phishing / APK Android Bahaya</option>
-                  <option value="Pelaburan Palsu">Pelaburan Tidak Wujud</option>
-                  <option value="E-Commerce/Job">Scam Kerja / Beli-belah Online</option>
+                  <option value="Macau Scam" data-key="opt-macau">Macau Scam / Menyamar Pihak Berkuasa</option>
+                  <option value="Phishing APK" data-key="opt-phishing">Phishing / APK Android Bahaya</option>
+                  <option value="Pelaburan Palsu" data-key="opt-invest">Pelaburan Tidak Wujud</option>
+                  <option value="E-Commerce/Job" data-key="opt-job">Scam Kerja / Beli-belah Online</option>
                 </select>
               </div>
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-600 mb-1">Butiran / Kronologi Kejadian</label>
-              <textarea id="reportDesc" rows="3" required placeholder="Ceritakan bagaimana scammer menghubungi anda..." class="w-full p-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"></textarea>
+              <label class="block text-xs font-bold text-slate-600 mb-1" data-key="report-label-desc">Butiran / Kronologi Kejadian</label>
+              <textarea id="reportDesc" rows="3" required data-key-placeholder="report-desc-ph" placeholder="Ceritakan bagaimana scammer menghubungi anda..." class="w-full p-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"></textarea>
             </div>
-            <button type="submit" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold px-6 py-3 rounded-xl shadow transition-all">
+            <button type="submit" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold px-6 py-3 rounded-xl shadow transition-all" data-key="report-btn-submit">
               Hantar Laporan Komuniti
             </button>
           </form>
@@ -330,11 +330,11 @@
       <!-- TAB 4: SEMAKAN MULE -->
       <section id="tab-realtime" class="tab-content space-y-6">
         <div class="glass-card p-8 rounded-3xl">
-          <h2 class="text-2xl font-black text-slate-800 mb-2"><i class="fa-solid fa-magnifying-glass-shield text-teal-500 mr-2"></i> Semak Mule PDRM & Pangkalan Data</h2>
-          <p class="text-slate-600 text-sm mb-6">Masukkan nombor akaun bank atau nombor telefon untuk menyemak rekod laporan penipuan komersil.</p>
+          <h2 class="text-2xl font-black text-slate-800 mb-2"><i class="fa-solid fa-magnifying-glass-shield text-teal-500 mr-2"></i> <span data-key="mule-title">Semak Mule PDRM & Pangkalan Data</span></h2>
+          <p class="text-slate-600 text-sm mb-6" data-key="mule-desc">Masukkan nombor akaun bank atau nombor telefon untuk menyemak rekod laporan penipuan komersil.</p>
           <div class="flex gap-2 max-w-xl">
-            <input type="text" id="muleCheckInput" placeholder="Masukkan No. Telefon atau Akaun Bank..." class="flex-1 p-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 font-semibold">
-            <button onclick="checkMuleDatabase()" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all">Semak</button>
+            <input type="text" id="muleCheckInput" data-key-placeholder="mule-ph" placeholder="Masukkan No. Telefon atau Akaun Bank..." class="flex-1 p-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 font-semibold">
+            <button onclick="checkMuleDatabase()" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all" data-key="mule-btn">Semak</button>
           </div>
           <div id="muleResultBox" class="mt-4 hidden p-4 rounded-xl text-sm font-semibold"></div>
         </div>
@@ -343,22 +343,22 @@
       <!-- TAB 5: PERLINDUNGAN PERANTI -->
       <section id="tab-protection" class="tab-content space-y-6">
         <div class="glass-card p-8 rounded-3xl">
-          <h2 class="text-2xl font-black text-slate-800 mb-2"><i class="fa-solid fa-mobile-vibration text-purple-500 mr-2"></i> Perlindungan Peranti & APK Shield</h2>
-          <p class="text-slate-600 text-sm mb-6">Pastikan tetapan peranti Android anda selamat daripada pemasangan aplikasi pihak ketiga (APK) yang tidak sah.</p>
+          <h2 class="text-2xl font-black text-slate-800 mb-2"><i class="fa-solid fa-mobile-vibration text-purple-500 mr-2"></i> <span data-key="device-title">Perlindungan Peranti & APK Shield</span></h2>
+          <p class="text-slate-600 text-sm mb-6" data-key="device-desc">Pastikan tetapan peranti Android anda selamat daripada pemasangan aplikasi pihak ketiga (APK) yang tidak sah.</p>
           <div class="space-y-4">
             <div class="p-4 rounded-2xl bg-purple-50 border border-purple-200 flex justify-between items-center">
               <div>
-                <h4 class="font-bold text-purple-900">Sekatan Sumber Tidak Dikenali (Install Unknown Apps)</h4>
-                <p class="text-xs text-slate-600">Menghalang pemasangan fail APK luar Play Store secara automatik.</p>
+                <h4 class="font-bold text-purple-900" data-key="device-feat1-title">Sekatan Sumber Tidak Dikenali (Install Unknown Apps)</h4>
+                <p class="text-xs text-slate-600" data-key="device-feat1-desc">Menghalang pemasangan fail APK luar Play Store secara automatik.</p>
               </div>
-              <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full">Aktif</span>
+              <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full" data-key="badge-active-word">Aktif</span>
             </div>
             <div class="p-4 rounded-2xl bg-purple-50 border border-purple-200 flex justify-between items-center">
               <div>
-                <h4 class="font-bold text-purple-900">Imbasan Kebenaran Akses (Accessibility Permission Check)</h4>
-                <p class="text-xs text-slate-600">Memantau aplikasi berniat jahat yang mencuri kod TAC menerusi paparan skrin.</p>
+                <h4 class="font-bold text-purple-900" data-key="device-feat2-title">Imbasan Kebenaran Akses (Accessibility Permission Check)</h4>
+                <p class="text-xs text-slate-600" data-key="device-feat2-desc">Memantau aplikasi berniat jahat yang mencuri kod TAC menerusi paparan skrin.</p>
               </div>
-              <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full">Selamat</span>
+              <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full" data-key="badge-safe">Selamat</span>
             </div>
           </div>
         </div>
@@ -367,18 +367,18 @@
       <!-- TAB 6: RESPON CEMAS -->
       <section id="tab-emergency" class="tab-content space-y-6">
         <div class="glass-card p-8 rounded-3xl border-2 border-red-200">
-          <h2 class="text-2xl font-black text-red-600 mb-2"><i class="fa-solid fa-phone-flip mr-2"></i> Pusat Respon Cemas & NSRC 997</h2>
-          <p class="text-slate-600 text-sm mb-6">Jika anda baru sahaja menjadi mangsa penipuan kewangan (scam), hubungi talian rasmi di bawah serta-merta untuk membekukan akaun.</p>
+          <h2 class="text-2xl font-black text-red-600 mb-2"><i class="fa-solid fa-phone-flip mr-2"></i> <span data-key="emergency-title">Pusat Respon Cemas & NSRC 997</span></h2>
+          <p class="text-slate-600 text-sm mb-6" data-key="emergency-desc">Jika anda baru sahaja menjadi mangsa penipuan kewangan (scam), hubungi talian rasmi di bawah serta-merta untuk membekukan akaun.</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <a href="tel:997" class="p-6 rounded-2xl bg-red-600 text-white font-bold flex items-center justify-between shadow-lg hover:bg-red-700 transition-all">
               <div>
-                <p class="text-xs uppercase text-red-200">Pusat Respons Scam Kebangsaan</p>
+                <p class="text-xs uppercase text-red-200" data-key="emergency-nsrc-sub">Pusat Respons Scam Kebangsaan</p>
                 <p class="text-3xl font-black">NSRC 997</p>
               </div>
               <i class="fa-solid fa-phone text-3xl animate-bounce"></i>
             </a>
             <div class="p-6 rounded-2xl bg-slate-900 text-white font-bold flex flex-col justify-center">
-              <p class="text-xs uppercase text-slate-400">Talian Kecemasan Polis</p>
+              <p class="text-xs uppercase text-slate-400" data-key="emergency-police-sub">Talian Kecemasan Polis</p>
               <p class="text-2xl font-black text-amber-400">999 / CCID PDRM</p>
             </div>
           </div>
@@ -394,13 +394,13 @@
       <div class="w-20 h-20 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-4xl mx-auto pulse-danger">
         <i class="fa-solid fa-triangle-exclamation"></i>
       </div>
-      <h3 class="text-2xl font-black text-slate-900">MOD PANIK / KILL-SWITCH AKTIF</h3>
-      <p class="text-slate-600 text-sm">Tindakan pantas untuk menghentikan transaksi kewangan dan menyekat akaun anda daripada terus diceroboh scammer.</p>
+      <h3 class="text-2xl font-black text-slate-900" data-key="modal-title">MOD PANIK / KILL-SWITCH AKTIF</h3>
+      <p class="text-slate-600 text-sm" data-key="modal-desc">Tindakan pantas untuk menghentikan transaksi kewangan dan menyekat akaun anda daripada terus diceroboh scammer.</p>
       <div class="space-y-3">
         <a href="tel:997" class="block w-full py-4 bg-red-600 hover:bg-red-700 text-white font-black rounded-2xl shadow-lg">
-          <i class="fa-solid fa-phone-flip mr-2"></i> Hubungi NSRC 997 Segera
+          <i class="fa-solid fa-phone-flip mr-2"></i> <span data-key="modal-btn-call">Hubungi NSRC 997 Segera</span>
         </a>
-        <button onclick="closeEmergencyModal()" class="block w-full py-3 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold rounded-2xl">
+        <button onclick="closeEmergencyModal()" class="block w-full py-3 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold rounded-2xl" data-key="modal-btn-close">
           Tutup Mod Panik
         </button>
       </div>
@@ -408,6 +408,298 @@
   </div>
 
   <script>
+    // Kamus Terjemahan Bahasa (MS, EN, ZH, TA)
+    const translations = {
+      ms: {
+        "sub-title": "Pelindung Siber Komuniti",
+        "txt-senior-mode": "Mod Warga Emas",
+        "kill-switch": "PANIK / KILL-SWITCH",
+        "nav-home": "Utama",
+        "nav-edu": "Edukasi & Kuiz",
+        "nav-report": "Lapor & AI",
+        "nav-scan": "Semakan Mule",
+        "nav-device": "Perlindungan Peranti",
+        "nav-emergency": "Respon Cemas",
+        "badge-active": "SISTEM AKTIF - PERLINDUNGAN REAL-TIME 24/7",
+        "dash-hero-title": "Lindungi Diri & Keluarga Daripada Ancaman Penipuan Siber",
+        "dash-hero-sub": "Platform saringan AI pintar integrasi komuniti, Semak Mule PDRM, dan perisai pencegah muat turun APK berbahaya secara automatik.",
+        "quick-search-ph": "Masukkan No. Telefon, Bank, atau Link...",
+        "btn-quick-check": "Semak Pantas",
+        "stat-threats": "Ancaman Dikesan Hari Ini",
+        "stat-accounts": "Akaun Bank Dibatalkan",
+        "stat-saved": "Wang Diselamatkan",
+        "stat-status": "Status Sistem",
+        "stat-protected": "🟢 100% Dilindungi",
+        "card1-title": "Caller ID & Semak Mule PDRM",
+        "card1-desc": "Semak nombor telefon pencuri atau akaun bank mule dalam pangkalan data rasmi PDRM.",
+        "card2-title": "AI Penganalisis Mesej Scam",
+        "card2-desc": "Semak SMS, WhatsApp, atau pautan mencurigakan menggunakan AI Pintar untuk mengesan unsur scam serta-merta.",
+        "card3-title": "Perisai APK & Malware",
+        "card3-desc": "Sekat pemasangan aplikasi berniat jahat (APK tiruan) yang cuba mencuri TAC bank anda.",
+        "edu-main-title": "Edukasi & Kuiz Kesedaran Siber",
+        "edu-main-desc": "Ketahui jenis-jenis penipuan popular seperti Macau Scam, Phishing, dan Pelaburan Palsu melalui modul interaktif.",
+        "edu-macau-title": "Macau Scam",
+        "edu-macau-desc": "Menyamar sebagai pegawai LHDN, polis, atau mahkamah menakutkan mangsa.",
+        "edu-phishing-title": "Phishing & APK",
+        "edu-phishing-desc": "Pautan palsu dan fail APK cuci akaun bank melalui SMS/WhatsApp.",
+        "edu-invest-title": "Pelaburan Palsu",
+        "edu-invest-desc": "Menjanjikan pulangan lumayan dalam masa singkat tanpa risiko.",
+        "btn-read-module": "Baca Modul",
+        "ai-title": "AI Penganalisis Mesej & Laporan Scam",
+        "ai-desc": "Semak mesej mencurigakan (SMS, WhatsApp, Emel) menggunakan AI untuk mengesan taktik scammer dengan serta-merta.",
+        "ai-box-label": "Tampal Mesej atau Pautan Mencurigakan Di Sini:",
+        "ai-placeholder": "Contoh: 'Tuan/Puan, anda mempunyai saman tertunggak JPJ sila klik pautan http://t.me/jpj-saman untuk semakan...'",
+        "ai-note": "AI dilatih dengan ribuan kes arkib scam Malaysia.",
+        "ai-btn-analyze": "Analisis AI Sekarang",
+        "report-title": "Laporkan Sindiket Penipuan Baharu",
+        "report-label-phone": "Nombor Telefon / Akaun Suspek",
+        "report-label-cat": "Kategori Scam",
+        "opt-macau": "Macau Scam / Menyamar Pihak Berkuasa",
+        "opt-phishing": "Phishing / APK Android Bahaya",
+        "opt-invest": "Pelaburan Tidak Wujud",
+        "opt-job": "Scam Kerja / Beli-belah Online",
+        "report-label-desc": "Butiran / Kronologi Kejadian",
+        "report-desc-ph": "Ceritakan bagaimana scammer menghubungi anda...",
+        "report-btn-submit": "Hantar Laporan Komuniti",
+        "mule-title": "Semak Mule PDRM & Pangkalan Data",
+        "mule-desc": "Masukkan nombor akaun bank atau nombor telefon untuk menyemak rekod laporan penipuan komersil.",
+        "mule-ph": "Masukkan No. Telefon atau Akaun Bank...",
+        "mule-btn": "Semak",
+        "device-title": "Perlindungan Peranti & APK Shield",
+        "device-desc": "Pastikan tetapan peranti Android anda selamat daripada pemasangan aplikasi pihak ketiga (APK) yang tidak sah.",
+        "device-feat1-title": "Sekatan Sumber Tidak Dikenali (Install Unknown Apps)",
+        "device-feat1-desc": "Menghalang pemasangan fail APK luar Play Store secara automatik.",
+        "badge-active-word": "Aktif",
+        "device-feat2-title": "Imbasan Kebenaran Akses (Accessibility Permission Check)",
+        "device-feat2-desc": "Memantau aplikasi berniat jahat yang mencuri kod TAC menerusi paparan skrin.",
+        "badge-safe": "Selamat",
+        "emergency-title": "Pusat Respon Cemas & NSRC 997",
+        "emergency-desc": "Jika anda baru sahaja menjadi mangsa penipuan kewangan (scam), hubungi talian rasmi di bawah serta-merta untuk membekukan akaun.",
+        "emergency-nsrc-sub": "Pusat Respons Scam Kebangsaan",
+        "emergency-police-sub": "Talian Kecemasan Polis",
+        "modal-title": "MOD PANIK / KILL-SWITCH AKTIF",
+        "modal-desc": "Tindakan pantas untuk menghentikan transaksi kewangan dan menyekat akaun anda daripada terus diceroboh scammer.",
+        "modal-btn-call": "Hubungi NSRC 997 Segera",
+        "modal-btn-close": "Tutup Mod Panik"
+      },
+      en: {
+        "sub-title": "Community Cyber Protector",
+        "txt-senior-mode": "Senior Mode",
+        "kill-switch": "PANIC / KILL-SWITCH",
+        "nav-home": "Home",
+        "nav-edu": "Education & Quiz",
+        "nav-report": "Report & AI",
+        "nav-scan": "Mule Check",
+        "nav-device": "Device Protection",
+        "nav-emergency": "Emergency Response",
+        "badge-active": "SYSTEM ACTIVE - 24/7 REAL-TIME PROTECTION",
+        "dash-hero-title": "Protect Yourself & Family From Cyber Fraud Threats",
+        "dash-hero-sub": "Smart AI community screening platform, PDRM Mule Check, and automatic dangerous APK download blocker.",
+        "quick-search-ph": "Enter Phone No., Bank, or Link...",
+        "btn-quick-check": "Quick Check",
+        "stat-threats": "Threats Detected Today",
+        "stat-accounts": "Bank Accounts Cancelled",
+        "stat-saved": "Money Saved",
+        "stat-status": "System Status",
+        "stat-protected": "🟢 100% Protected",
+        "card1-title": "Caller ID & PDRM Mule Check",
+        "card1-desc": "Check suspect phone numbers or mule bank accounts in official PDRM databases.",
+        "card2-title": "AI Scam Message Analyzer",
+        "card2-desc": "Check SMS, WhatsApp, or suspicious links using Smart AI to instantly detect scam elements.",
+        "card3-title": "APK & Malware Shield",
+        "card3-desc": "Block installation of malicious apps (fake APKs) attempting to steal your bank TAC.",
+        "edu-main-title": "Cyber Awareness Education & Quiz",
+        "edu-main-desc": "Learn popular fraud types like Macau Scams, Phishing, and Fake Investments through interactive modules.",
+        "edu-macau-title": "Macau Scam",
+        "edu-macau-desc": "Impersonating LHDN, police, or court officers to intimidate victims.",
+        "edu-phishing-title": "Phishing & APK",
+        "edu-phishing-desc": "Fake links and APK files draining bank accounts via SMS/WhatsApp.",
+        "edu-invest-title": "Fake Investment",
+        "edu-invest-desc": "Promising high returns in a short time without risk.",
+        "btn-read-module": "Read Module",
+        "ai-title": "AI Message Analyzer & Scam Report",
+        "ai-desc": "Scan suspicious messages (SMS, WhatsApp, Email) using AI to instantly detect scammer tactics.",
+        "ai-box-label": "Paste Suspicious Message or Link Here:",
+        "ai-placeholder": "Example: 'Sir/Madam, you have an unpaid JPJ summon please click http://t.me/jpj-saman to check...'",
+        "ai-note": "AI is trained with thousands of Malaysian scam archive cases.",
+        "ai-btn-analyze": "Analyze AI Now",
+        "report-title": "Report New Fraud Syndicate",
+        "report-label-phone": "Suspect Phone No. / Account",
+        "report-label-cat": "Scam Category",
+        "opt-macau": "Macau Scam / Authority Impersonation",
+        "opt-phishing": "Phishing / Dangerous Android APK",
+        "opt-invest": "Non-Existent Investment",
+        "opt-job": "Job / Online Shopping Scam",
+        "report-label-desc": "Details / Incident Chronology",
+        "report-desc-ph": "Describe how the scammer contacted you...",
+        "report-btn-submit": "Submit Community Report",
+        "mule-title": "PDRM Mule Check & Database",
+        "mule-desc": "Enter bank account numbers or phone numbers to check commercial fraud report records.",
+        "mule-ph": "Enter Phone No. or Bank Account...",
+        "mule-btn": "Check",
+        "device-title": "Device Protection & APK Shield",
+        "device-desc": "Ensure your Android device settings are secure from unauthorized third-party app (APK) installations.",
+        "device-feat1-title": "Install Unknown Apps Restriction",
+        "device-feat1-desc": "Automatically blocks external APK file installations outside the Play Store.",
+        "badge-active-word": "Active",
+        "device-feat2-title": "Accessibility Permission Check",
+        "device-feat2-desc": "Monitors malicious apps attempting to steal TAC codes via screen overlays.",
+        "badge-safe": "Safe",
+        "emergency-title": "Emergency Response Center & NSRC 997",
+        "emergency-desc": "If you have just become a financial fraud victim (scam), contact the official hotlines below immediately to freeze accounts.",
+        "emergency-nsrc-sub": "National Scam Response Center",
+        "emergency-police-sub": "Police Emergency Hotline",
+        "modal-title": "PANIC MODE / KILL-SWITCH ACTIVE",
+        "modal-desc": "Quick action to halt financial transactions and block your account from further scammer access.",
+        "modal-btn-call": "Call NSRC 997 Immediately",
+        "modal-btn-close": "Close Panic Mode"
+      },
+      zh: {
+        "sub-title": "社区网络保护者",
+        "txt-senior-mode": "长者模式",
+        "kill-switch": "紧急 / 终止开关",
+        "nav-home": "首页",
+        "nav-edu": "教育与测验",
+        "nav-report": "举报与AI",
+        "nav-scan": "诈骗账户查询",
+        "nav-device": "设备保护",
+        "nav-emergency": "紧急响应",
+        "badge-active": "系统激活 - 24/7 实时保护",
+        "dash-hero-title": "保护您和家人免受网络欺诈威胁",
+        "dash-hero-sub": "智能AI社区筛查平台、皇家警察诈骗账户查询，以及自动阻止下载危险APK的防线。",
+        "quick-search-ph": "输入电话号码、银行或链接...",
+        "btn-quick-check": "快速查询",
+        "stat-threats": "今日检测威胁",
+        "stat-accounts": "已冻结银行账户",
+        "stat-saved": "挽回资金",
+        "stat-status": "系统状态",
+        "stat-protected": "🟢 100% 受保护",
+        "card1-title": "来电显示与警方防诈查询",
+        "card1-desc": "在官方警察数据库中查询嫌疑人电话号码或诈骗银行账户。",
+        "card2-title": "AI诈骗信息分析仪",
+        "card2-desc": "使用智能AI检查短信、WhatsApp或可疑链接，立即检测诈骗元素。",
+        "card3-title": "APK与恶意软件防护",
+        "card3-desc": "阻止安装试图窃取您银行TAC验证码的恶意应用（仿冒APK）。",
+        "edu-main-title": "网络安全意识教育与测验",
+        "edu-main-desc": "通过互动模块了解澳门骗局、网络钓鱼和虚假投资等热门诈骗类型。",
+        "edu-macau-title": "澳门骗局",
+        "edu-macau-desc": "冒充内陆税收局、警察或法庭官员恐吓受害者。",
+        "edu-phishing-title": "网络钓鱼与APK",
+        "edu-phishing-desc": "通过短信/WhatsApp发送虚假链接和清空银行账户的APK文件。",
+        "edu-invest-title": "虚假投资",
+        "edu-invest-desc": "承诺在短时间内获得无风险的高额回报。",
+        "btn-read-module": "阅读模块",
+        "ai-title": "AI信息分析与诈骗举报",
+        "ai-desc": "使用AI扫描可疑信息（短信、WhatsApp、电子邮件）以立即发现诈骗分子手段。",
+        "ai-box-label": "在此粘贴可疑信息或链接：",
+        "ai-placeholder": "示例：'先生/女士，您有未缴交的陆路交通局罚单，请点击 http://t.me/jpj-saman 查询...'",
+        "ai-note": "AI经过数千起马来西亚诈骗档案案例的训练。",
+        "ai-btn-analyze": "立即AI分析",
+        "report-title": "举报新诈骗集团",
+        "report-label-phone": "嫌疑人电话号码 / 账户",
+        "report-label-cat": "诈骗类别",
+        "opt-macau": "澳门骗局 / 冒充执法人员",
+        "opt-phishing": "网络钓鱼 / 危险安卓APK",
+        "opt-invest": "虚构投资",
+        "opt-job": "工作 / 网购诈骗",
+        "report-label-desc": "详细信息 / 事件经过",
+        "report-desc-ph": "描述骗子是如何联系您的...",
+        "report-btn-submit": "提交社区举报",
+        "mule-title": "警方诈骗账户查询及数据库",
+        "mule-desc": "输入银行账户号码或电话号码以检查商业欺诈报告记录。",
+        "mule-ph": "输入电话号码或银行账户...",
+        "mule-btn": "查询",
+        "device-title": "设备保护与APK防护盾",
+        "device-desc": "确保您的安卓设备设置安全，免受未授权第三方应用（APK）安装的影响。",
+        "device-feat1-title": "限制安装未知来源应用",
+        "device-feat1-desc": "自动阻止在应用商店之外安装外部APK文件。",
+        "badge-active-word": "活跃",
+        "device-feat2-title": "无障碍权限扫描",
+        "device-feat2-desc": "监控试图通过屏幕覆盖层窃取TAC验证码的恶意应用。",
+        "badge-safe": "安全",
+        "emergency-title": "紧急响应中心与国家反诈中心 997",
+        "emergency-desc": "如果您刚刚成为财务欺诈（诈骗）的受害者，请立即拨打以下官方热线以冻结账户。",
+        "emergency-nsrc-sub": "国家诈骗应对中心",
+        "emergency-police-sub": "警察紧急热线",
+        "modal-title": "恐慌模式 / 终止开关已激活",
+        "modal-desc": "迅速采取行动停止金融交易，并阻止您的账户被骗子进一步侵入。",
+        "modal-btn-call": "立即拨打 997",
+        "modal-btn-close": "关闭恐慌模式"
+      },
+      ta: {
+        "sub-title": "சமூக சைபர் பாதுகாவலர்",
+        "txt-senior-mode": "மூத்த குடிமக்கள் முறை",
+        "kill-switch": "அவசர / நிறுத்து சுவிட்ச்",
+        "nav-home": "முகப்பு",
+        "nav-edu": "கல்வி & வினாடி வினா",
+        "nav-report": "புகார் & AI",
+        "nav-scan": "முள் கணக்கு சரிபார்ப்பு",
+        "nav-device": "சாதன பாதுகாப்பு",
+        "nav-emergency": "அவசர உதவி",
+        "badge-active": "கட்டமைப்பு இயங்குகிறது - 24/7 உண்மையான நேர பாதுகாப்பு",
+        "dash-hero-title": "சைபர் மோசடி அச்சுறுத்தல்களில் இருந்து உங்களையும் உங்கள் குடும்பத்தையும் பாதுகாக்கவும்",
+        "dash-hero-sub": "ஸ்மார்ட் AI சமூக ஸ்கிரீனிங் தளம், PDRM முள் கணக்கு சரிபார்ப்பு மற்றும் ஆபத்தான APK பதிவிறக்க தடுப்பு.",
+        "quick-search-ph": "தொலைபேசி எண், வங்கி அல்லது இணைப்பை உள்ளிடவும்...",
+        "btn-quick-check": "விரைவு சோதனை",
+        "stat-threats": "இன்று கண்டறியப்பட்ட அச்சுறுத்தல்கள்",
+        "stat-accounts": "ரத்து செய்யப்பட்ட வங்கிக் கணக்குகள்",
+        "stat-saved": "சேமிக்கப்பட்ட பணம்",
+        "stat-status": "கட்டமைப்பு நிலை",
+        "stat-protected": "🟢 100% பாதுகாப்பானது",
+        "card1-title": "அழைப்பாளர் ஐடி & PDRM முள் சரிபார்ப்பு",
+        "card1-desc": "அதிகாரப்பூர்வ PDRM தரவுத்தளத்தில் சந்தேகத்திற்கிடமான தொலைபேசி எண்கள் அல்லது வங்கிக் கணக்குகளைச் சரிபார்க்கவும்.",
+        "card2-title": "AI மோசடி செய்தி பகுப்பாய்வி",
+        "card2-desc": "மோசடி கூறுகளை உடனடியாகக் கண்டறிய ஸ்மார்ட் AI ஐப் பயன்படுத்தி SMS, WhatsApp அல்லது இணைப்புகளைச் சரிபார்க்கவும்.",
+        "card3-title": "APK & தீம்பொருள் பாதுகாப்பு",
+        "card3-desc": "உங்கள் வங்கி TAC குறியீட்டைத் திருட முயலும் தீங்கிழைக்கும் பயன்பாடுகளின் (போலி APKகள்) நிறுவலைத் தடுக்கவும்.",
+        "edu-main-title": "சைபர் விழிப்புணர்வு கல்வி & வினாடி வினா",
+        "edu-main-desc": "மக்காவு மோசடி, ஃபிஷிங் மற்றும் போலி முதலீடுகள் போன்ற பிரபலமான மோசடி வகைகளை ஊடாடும் தொகுதிகள் மூலம் அறியவும்.",
+        "edu-macau-title": "மக்காவு மோசடி",
+        "edu-macau-desc": "LHDN, காவல்துறை அல்லது நீதிமன்ற அதிகாரிகளாக ஆள்மாறாட்டம் செய்து அச்சுறுத்துதல்.",
+        "edu-phishing-title": "ஃபிஷிங் & APK",
+        "edu-phishing-desc": "SMS/WhatsApp வழியாக வங்கிக் கணக்குகளை காலி செய்யும் போலி இணைப்புகள் மற்றும் APK கோப்புகள்.",
+        "edu-invest-title": "போலி முதலீடு",
+        "edu-invest-desc": "குறைந்த காலத்தில் ஆபத்து இல்லாமல் அதிக லாபம் தருவதாக உறுதியளித்தல்.",
+        "btn-read-module": "தொகுதியைப் படிக்கவும்",
+        "ai-title": "AI செய்தி பகுப்பாய்வி & மோசடி அறிக்கை",
+        "ai-desc": "மோசடி செய்பவர்களின் தந்திரங்களை உடனடியாகக் கண்டறிய AI ஐப் பயன்படுத்தி சந்தேகத்திற்கிடமான செய்திகளை ஸ்கேன் செய்யவும்.",
+        "ai-box-label": "சந்தேகத்திற்கிடமான செய்தி அல்லது இணைப்பை இங்கே ஒட்டவும்:",
+        "ai-placeholder": "உதாரணம்: 'ஐயா/அம்மா, உங்களுக்கு JPJ அபராதம் உள்ளது, சரிபார்க்க http://t.me/jpj-saman ஐ சொடுக்கவும்...'",
+        "ai-note": "ஆயிரக்கணக்கான மலேசிய மோசடி காப்பக நிகழ்வுகளைக் கொண்டு AI பயிற்றுவிக்கப்பட்டுள்ளது.",
+        "ai-btn-analyze": "இப்போது AI பகுப்பாய்வு செய்",
+        "report-title": "புதிய மோசடி கூட்டமைப்பைப் புகாரளிக்கவும்",
+        "report-label-phone": "சந்தேக நபர் தொலைபேசி எண் / கணக்கு",
+        "report-label-cat": "மோசடி வகை",
+        "opt-macau": "மக்காவு மோசடி / அதிகாரி ஆள்மாறாட்டம்",
+        "opt-phishing": "ஃபிஷிங் / ஆபத்தான Android APK",
+        "opt-invest": "இல்ல1 இல்லாத முதலீடு",
+        "opt-job": "வேலை / ஆன்லைன் ஷாப்பிங் மோசடி",
+        "report-label-desc": "விவரங்கள் / நிகழ்வு காலவரிசை",
+        "report-desc-ph": "மோசடி செய்பவர் உങ്ങളെ எவ்வாறு தொடர்பு கொண்டார் என்பதை விவரிக்கவும்...",
+        "report-btn-submit": "சமூக அறிக்கையைச் சமர்ப்பிக்கவும்",
+        "mule-title": "PDRM முள் சரிபார்ப்பு & தரவுத்தளம்",
+        "mule-desc": "வணிக மோசடி அறிக்கை பதிவுகளைச் சரிபார்க்க வங்கிக் கணக்கு எண்கள் அல்லது தொலைபேசி எண்களை உள்ளிடவும்.",
+        "mule-ph": "தொலைபேசி எண் அல்லது வங்கிக் கணக்கை உள்ளிடவும்...",
+        "mule-btn": "சரிபார்",
+        "device-title": "சாதன பாதுகாப்பு & APK ஷீல்டு",
+        "device-desc": "அங்கீகரிக்கப்படாத மூன்றாம் தரப்பு பயன்பாட்டு (APK) நிறுவல்களிலிருந்து உங்கள் Android சாதன அமைப்புகள் பாதுகாப்பாக இருப்பதை உறுதிசெய்யவும்.",
+        "device-feat1-title": "தெரியாத மூல பயன்பாடுகளின் கட்டுப்பாடு",
+        "device-feat1-desc": "Play Storeக்கு வெளியே உள்ள வெளிப்புற APK கோப்பு நிறுவல்களைத் தானாகத் தடுக்கிறது.",
+        "badge-active-word": "செயலில்",
+        "device-feat2-title": "அணுகல் அனுமதி ஸ்கேன்",
+        "device-feat2-desc": "திரை மேலடுக்குகள் மூலம் TAC குறியீடுகளைத் திருட முயலும் தீங்கிழைக்கும் பயன்பாடுகளைக் கண்காணிக்கிறது.",
+        "badge-safe": "பாதுகாப்பானது",
+        "emergency-title": "அவசர உதவி மையம் & NSRC 997",
+        "emergency-desc": "நீங்கள் நிதி மோசடிக்கு (scam) ஆளாகியிருந்தால், கணக்குகளை முடக்க உடனடியாக கீழே உள்ள அதிகாரப்பூர்வ உதவி எண்களைத் தொடர்பு கொள்ளவும்.",
+        "emergency-nsrc-sub": "தேசிய மோசடி மீட்பு மையம்",
+        "emergency-police-sub": "காவல்துறை அவசர உதவி எண்",
+        "modal-title": "அவசர முறை / கில்-சுவிட்ச் فعال",
+        "modal-desc": "நிதி பரிவர்த்தனைகளை நிறுத்தவும், மோசடி செய்பவர்கள் உங்கள் கணக்கை மேலும் அணுகுவதைத் தடுக்கவும் விரைவான நடவடிக்கை.",
+        "modal-btn-call": "NSRC 997 ஐ உடனே அழைக்கவும்",
+        "modal-btn-close": "அவசர முறையை மூடு"
+      }
+    };
+
     // Tab Navigation Logic
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -432,9 +724,14 @@
     function toggleSeniorMode() {
       isSeniorMode = !isSeniorMode;
       document.body.classList.toggle('senior-mode', isSeniorMode);
+      const currentLang = document.getElementById('langSelect').value;
       const btnTxt = document.getElementById('txt-senior-mode');
       if (btnTxt) {
-        btnTxt.innerText = isSeniorMode ? 'Mod Biasa' : 'Mod Warga Emas';
+        if (isSeniorMode) {
+          btnTxt.innerText = (currentLang === 'en') ? 'Normal Mode' : (currentLang === 'zh') ? '普通模式' : (currentLang === 'ta') ? 'சாதாரண முறை' : 'Mod Biasa';
+        } else {
+          btnTxt.innerText = translations[currentLang]['txt-senior-mode'] || 'Mod Warga Emas';
+        }
       }
     }
 
@@ -449,8 +746,13 @@
     // Quick Search & Mule Check simulation
     function executeQuickScan() {
       const val = document.getElementById('quickSearchInput').value.trim();
+      const currentLang = document.getElementById('langSelect').value;
       if (!val) {
-        alert('Sila masukkan nombor telefon atau maklumat untuk disemak.');
+        const msg = (currentLang === 'en') ? 'Please enter a phone number or information to check.' : 
+                    (currentLang === 'zh') ? '请输入要检查的电话号码或信息。' : 
+                    (currentLang === 'ta') ? 'தயவுசெய்து தொலைபேசி எண் அல்லது தகவலை உள்ளிடவும்.' : 
+                    'Sila masukkan nombor telefon atau maklumat untuk disemak.';
+        alert(msg);
         return;
       }
       switchTab('realtime');
@@ -461,19 +763,32 @@
     function checkMuleDatabase() {
       const query = document.getElementById('muleCheckInput').value.trim();
       const resBox = document.getElementById('muleResultBox');
+      const currentLang = document.getElementById('langSelect').value;
       resBox.classList.remove('hidden');
       if (!query) {
         resBox.className = 'mt-4 p-4 rounded-xl text-sm font-semibold bg-amber-50 text-amber-800 border border-amber-200';
-        resBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2"></i> Sila masukkan maklumat carian yang sah.';
+        const warnText = (currentLang === 'en') ? 'Please enter valid search information.' :
+                         (currentLang === 'zh') ? '请输入有效的搜索信息。' :
+                         (currentLang === 'ta') ? 'செல்லுபடியாகும் தேடல் தகவலை உள்ளிடவும்.' :
+                         'Sila masukkan maklumat carian yang sah.';
+        resBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-2"></i> ${warnText}`;
         return;
       }
       // Simulated check result
       if (query.length % 2 === 0) {
         resBox.className = 'mt-4 p-4 rounded-xl text-sm font-semibold bg-red-50 text-red-700 border border-red-200';
-        resBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2"></i> AMARAN! Maklumat ini mempunyai rekod laporan dalam pangkalan data akaun mule / scam PDRM.';
+        const alertText = (currentLang === 'en') ? 'WARNING! This information has report records in the PDRM mule/scam database.' :
+                          (currentLang === 'zh') ? '警告！该信息在皇家警察诈骗/涉案账户数据库中有举报记录。' :
+                          (currentLang === 'ta') ? 'எச்சரிக்கை! இந்தத் தகவல் PDRM முள்/மோசடி தரவுத்தளத்தில் அறிக்கைப் பதிவுகளைக் கொண்டுள்ளது.' :
+                          'AMARAN! Maklumat ini mempunyai rekod laporan dalam pangkalan data akaun mule / scam PDRM.';
+        resBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-2"></i> ${alertText}`;
       } else {
         resBox.className = 'mt-4 p-4 rounded-xl text-sm font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200';
-        resBox.innerHTML = '<i class="fa-solid fa-check-circle mr-2"></i> Bersih. Tiada rekod penipuan langsung ditemui dalam semakan asas sistem.';
+        const cleanText = (currentLang === 'en') ? 'Clean. No fraud records found in basic system checks.' :
+                          (currentLang === 'zh') ? '干净。基本系统检查中未发现诈骗记录。' :
+                          (currentLang === 'ta') ? 'சுத்தம். அடிப்படை கட்டமைப்பு சோதனைகளில் மோசடி பதிவுகள் எதுவும் இல்லை.' :
+                          'Bersih. Tiada rekod penipuan langsung ditemui dalam semakan asas sistem.';
+        resBox.innerHTML = `<i class="fa-solid fa-check-circle mr-2"></i> ${cleanText}`;
       }
     }
 
@@ -481,17 +796,25 @@
     function analyzeMessageWithAI() {
       const message = document.getElementById('aiMessageInput').value.trim();
       const resultBox = document.getElementById('aiAnalysisResult');
+      const currentLang = document.getElementById('langSelect').value;
       resultBox.classList.remove('hidden');
 
       if (!message) {
         resultBox.className = 'mt-6 p-4 rounded-xl bg-amber-900/40 border border-amber-600 text-amber-200 text-sm';
-        resultBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2"></i> Sila masukkan teks mesej atau pautan untuk dianalisis oleh AI.';
+        const emptyText = (currentLang === 'en') ? 'Please enter a message text or link to analyze.' :
+                          (currentLang === 'zh') ? '请输入要分析的短信或链接。' :
+                          (currentLang === 'ta') ? 'பகுப்பாய்வு செய்ய செய்தி உரை அல்லது இணைப்பை உள்ளிடவும்.' :
+                          'Sila masukkan teks mesej atau pautan untuk dianalisis oleh AI.';
+        resultBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-2"></i> ${emptyText}`;
         return;
       }
 
-      // Simulasi Analisis AI Pintarberdasarkan kata kunci scam biasa
       resultBox.className = 'mt-6 p-4 rounded-xl bg-slate-900 border border-cyan-500 text-white text-sm';
-      resultBox.innerHTML = '<div class="flex items-center space-x-2 text-cyan-400 font-bold mb-2"><i class="fa-solid fa-spinner fa-spin"></i> AI sedang menganalisis corak bahasa dan pautan...</div>';
+      const analyzingText = (currentLang === 'en') ? 'AI is analyzing language patterns and links...' :
+                            (currentLang === 'zh') ? 'AI 正在分析语言模式和链接...' :
+                            (currentLang === 'ta') ? 'AI மொழி வடிவங்களையும் இணைப்புகளையும் பகுப்பாய்வு செய்கிறது...' :
+                            'AI sedang menganalisis corak bahasa dan pautan...';
+      resultBox.innerHTML = `<div class="flex items-center space-x-2 text-cyan-400 font-bold mb-2"><i class="fa-solid fa-spinner fa-spin"></i> ${analyzingText}</div>`;
 
       setTimeout(() => {
         const lowerMsg = message.toLowerCase();
@@ -500,34 +823,55 @@
 
         if (lowerMsg.includes('jpj') || lowerMsg.includes('saman') || lowerMsg.includes('t.me') || lowerMsg.includes('click') || lowerMsg.includes('klik') || lowerMsg.includes('bank') || lowerMsg.includes('tac') || lowerMsg.includes('menang') || lowerMsg.includes('pinjaman')) {
           isScam = true;
-          if (lowerMsg.includes('saman') || lowerMsg.includes('jpj')) reasons.push('Menyamar sebagai agensi kerajaan (JPJ/Saman).');
-          if (lowerMsg.includes('t.me') || lowerMsg.includes('klik') || lowerMsg.includes('click')) reasons.push('Mengandungi pautan meragukan (Phishing/Telegram luar).');
-          if (lowerMsg.includes('bank') || lowerMsg.includes('tac')) reasons.push('Cuba mendapatkan maklumat perbankan peribadi.');
-          if (reasons.length === 0) reasons.push('Corak ayat mirip taktik penipuan komersil popular.');
+          if (lowerMsg.includes('saman') || lowerMsg.includes('jpj')) reasons.push('Impersonating government agencies.');
+          if (lowerMsg.includes('t.me') || lowerMsg.includes('klik') || lowerMsg.includes('click')) reasons.push('Contains suspicious links (Phishing).');
+          if (lowerMsg.includes('bank') || lowerMsg.includes('tac')) reasons.push('Attempting to obtain personal banking details.');
+          if (reasons.length === 0) reasons.push('Sentence pattern resembles popular commercial scams.');
         }
 
         if (isScam) {
           resultBox.className = 'mt-6 p-4 rounded-xl bg-red-950/80 border border-red-500 text-white text-sm space-y-2';
+          const highRiskTitle = (currentLang === 'en') ? 'HIGH WARNING: LIKELY A SCAM! (Risk Level: 95%)' :
+                                (currentLang === 'zh') ? '高度警告：极可能是诈骗！（风险级别：95%）' :
+                                (currentLang === 'ta') ? 'அதிக எச்சரிக்கை: ஒரு மோசடிக்கு அதிக வாய்ப்பಿದೆ! (ஆபத்து நிலை: 95%)' :
+                                'AMARAN TINGGI: KEMUNGKINAN BESAR SCAM! (Tahap Risiko: 95%)';
+          const reasonLabel = (currentLang === 'en') ? 'Detected reasons:' : (currentLang === 'zh') ? '检测原因：' : (currentLang === 'ta') ? 'கண்டறியப்பட்ட காரணங்கள்:' : 'Sebab dikesan oleh AI:';
+          const adviceLabel = (currentLang === 'en') ? 'Security Advice: Do not click any links, do not share OTP/TAC.' :
+                              (currentLang === 'zh') ? '安全建议：请勿点击任何链接，切勿共享OTP/TAC。' :
+                              (currentLang === 'ta') ? 'பாதுகாப்பு ஆலோசனை: எந்த இணைப்பையும் சொடுக்க வேண்டாம், OTP/TAC ஐப் பகிர வேண்டாம்.' :
+                              'Nasihat Keselamatan: Jangan klik sebarang pautan, jangan kongsi OTP/TAC.';
           resultBox.innerHTML = `
             <div class="flex items-center space-x-2 text-red-400 font-black text-base">
               <i class="fa-solid fa-triangle-exclamation text-xl"></i>
-              <span>AMARAN TINGGI: KEMUNGKINAN BESAR SCAM! (Tahap Risiko: 95%)</span>
+              <span>${highRiskTitle}</span>
             </div>
-            <p class="text-xs text-slate-300"><strong>Sebab dikesan oleh AI:</strong> ${reasons.join(' ')}</p>
+            <p class="text-xs text-slate-300"><strong>${reasonLabel}</strong> ${reasons.join(' ')}</p>
             <div class="p-3 bg-red-900/50 rounded-lg border border-red-700 text-xs text-red-100">
-              <strong>Nasihat Keselamatan:</strong> Jangan klik sebarang pautan, jangan kongsi OTP/TAC, dan jangan hubungi nombor telefon selain saluran rasmi.
+              ${adviceLabel}
             </div>
           `;
         } else {
           resultBox.className = 'mt-6 p-4 rounded-xl bg-emerald-950/80 border border-emerald-500 text-white text-sm space-y-2';
+          const safeTitle = (currentLang === 'en') ? 'STATUS: LOOKS SAFE (Low Risk)' :
+                            (currentLang === 'zh') ? '状态：看起来安全（低风险）' :
+                            (currentLang === 'ta') ? 'நிலை: பாதுகாப்பாகத் தெரிகிறது (குறைந்த ஆபத்து)' :
+                            'STATUS: KELIHATAN SELAMAT (Risiko Rendah)';
+          const safeDesc = (currentLang === 'en') ? 'AI did not find prominent scam threats or phishing links.' :
+                           (currentLang === 'zh') ? 'AI 未在信息中发现明显的诈骗威胁或网络钓鱼链接。' :
+                           (currentLang === 'ta') ? 'AI குறிப்பிடத்தக்க மோசடி அச்சுறுத்தல்கள் அல்லது ஃபிஷிங் இணைப்புகளைக் கண்டறியவில்லை.' :
+                           'AI tidak menemui sebarang kata kunci ancaman scam atau pautan pancingan data (phishing) yang ketara dalam mesej ini.';
+          const safeNote = (currentLang === 'en') ? 'However, always exercise caution if asked to submit personal info.' :
+                           (currentLang === 'zh') ? '但是，如果被要求提交个人信息，请务必小心。' :
+                           (currentLang === 'ta') ? 'இருப்பினும், தனிப்பட்ட தகவல்களைச் சமர்ப்பிக்குமாறு கேட்கப்பட்டால் எப்போதும் எச்சரிக்கையுடன் இருக்கவும்.' :
+                           'Walau bagaimanapun, sentiasa berhati-hati jika diminta menyerahkan maklumat peribadi.';
           resultBox.innerHTML = `
             <div class="flex items-center space-x-2 text-emerald-400 font-black text-base">
               <i class="fa-solid fa-shield-check text-xl"></i>
-              <span>STATUS: KELIHATAN SELAMAT (Risiko Rendah)</span>
+              <span>${safeTitle}</span>
             </div>
-            <p class="text-xs text-slate-300">AI tidak menemui sebarang kata kunci ancaman scam atau pautan pancingan data (phishing) yang ketara dalam mesej ini.</p>
+            <p class="text-xs text-slate-300">${safeDesc}</p>
             <div class="p-3 bg-emerald-900/50 rounded-lg border border-emerald-700 text-xs text-emerald-100">
-              Walau bagaimanapun, sentiasa berhati-hati jika diminta menyerahkan maklumat peribadi.
+              ${safeNote}
             </div>
           `;
         }
@@ -536,13 +880,45 @@
 
     function submitReport(e) {
       e.preventDefault();
-      alert('Laporan berjaya dihantar ke sistem komuniti CyberCentra AI. Terima kasih kerana melindungi komuniti!');
+      const currentLang = document.getElementById('langSelect').value;
+      const successMsg = (currentLang === 'en') ? 'Report successfully submitted to CyberCentra AI community system. Thank you for protecting the community!' :
+                         (currentLang === 'zh') ? '报告已成功提交至 CyberCentra AI 社区系统。感谢您保护社区！' :
+                         (currentLang === 'ta') சமூக பாதுகாப்பு அமைப்பிற்கு அறிக்கை வெற்றிகரமாக சமர்ப்பிக்கబட்டது. சமூகம் பாதுகாக்க உதவியதற்கு நன்றி!';
+                         'Laporan berjaya dihantar ke sistem komuniti CyberCentra AI. Terima kasih kerana melindungi komuniti!';
+      alert(successMsg);
       e.target.reset();
     }
 
+    // Fungsi Tukar Bahasa Dinamik
     function changeLanguage(lang) {
-      // Fungsi penukaran bahasa ringkas
-      console.lang = lang;
+      const dict = translations[lang];
+      if (!dict) return;
+
+      // Kemaskini semua elemen berattribute data-key
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (dict[key]) {
+          el.innerText = dict[key];
+        }
+      });
+
+      // Kemaskini placeholder pada input/textarea
+      document.querySelectorAll('[data-key-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-key-placeholder');
+        if (dict[key]) {
+          el.placeholder = dict[key];
+        }
+      });
+
+      // Kemaskini teks butang Mod Warga Emas jika aktif/tidak
+      const btnTxt = document.getElementById('txt-senior-mode');
+      if (btnTxt) {
+        if (isSeniorMode) {
+          btnTxt.innerText = (lang === 'en') ? 'Normal Mode' : (lang === 'zh') ? '普通模式' : (lang === 'ta') ? 'சாதாரண முறை' : 'Mod Biasa';
+        } else {
+          btnTxt.innerText = dict['txt-senior-mode'] || 'Mod Warga Emas';
+        }
+      }
     }
   </script>
 </body>
