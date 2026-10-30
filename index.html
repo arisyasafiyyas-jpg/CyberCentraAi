@@ -365,14 +365,21 @@
                   <p class="text-lg font-black text-slate-700">013-211 1222</p>
                   <p class="text-[10px] text-slate-500" data-key="hotline-ccid-sub">Saluran semakan & laporan pantas</p>
                 </div>
-                <button onclick="alert('Membuka aplikasi WhatsApp ke CCID PDRM')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-4 py-2.5 rounded-xl text-xs shadow-md">Chat</button>
+                <!-- BUTANG WHATSAPP CCID TERKINI -->
+                <a href="https://wa.me/60132111222?text=Salam%20CCID%20PDRM,%20saya%20ingin%20membuat%20semakan/laporan%20kes%20scam." 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-4 py-2.5 rounded-xl text-xs shadow-md flex items-center space-x-1.5 transition-all">
+                  <i class="fa-brands fa-whatsapp text-sm"></i>
+                  <span>Chat</span>
+                </a>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- TAB 5: REPORTING & COMMUNITY INTELLIGENCE (ENHANCED AI DETECTION DENGAN KESAN HADIAH/MENANG) -->
+      <!-- TAB 5: REPORTING & COMMUNITY INTELLIGENCE -->
       <section id="tab-community" class="tab-content hidden space-y-8">
         <div class="text-center max-w-2xl mx-auto">
           <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-100 text-amber-800 inline-block mb-2" data-key="mod4-badge">MODUL 2</span>
@@ -380,7 +387,7 @@
           <p class="text-sm text-slate-600 mt-1" data-key="mod4-desc">Kongsi laporan scammer untuk membantu pengguna lain. Kecerdasan Buatan (AI) menyaring laporan bagi mengelakkan laporan palsu.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          <!-- Borang Laporan Pantas dengan Enjin Imbasan AI -->
+          <!-- Borang Laporan Pantas -->
           <div class="glass-card p-6 sm:p-8 rounded-3xl border border-slate-200 space-y-4">
             <h3 class="font-extrabold text-slate-800 text-lg flex items-center justify-between">
               <span class="flex items-center"><i class="fa-solid fa-flag text-amber-500 mr-2"></i> <span data-key="form-rep-title">Borang Laporan Pantas</span></span>
@@ -414,7 +421,7 @@
                 <textarea id="reportDesc" rows="3" required placeholder="Tampal mesej SMS, WhatsApp atau ceritakan bagaimana suspek cuba menipu..." data-key-placeholder="form-desc-ph" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-amber-500 font-medium"></textarea>
               </div>
 
-              <!-- Petunjuk Analisis AI Langsung / Live Verification Box -->
+              <!-- Petunjuk Analisis AI Langsung -->
               <div id="aiLiveAnalysisResult" class="hidden p-3.5 rounded-2xl border transition-all text-xs space-y-1.5"></div>
 
               <div class="flex gap-2 pt-1">
@@ -518,9 +525,7 @@
     let isSeniorMode = false;
     let isScreenshotProtected = true;
 
-    // =========================================================
-    // PANGKALAN DATA SENARAI HITAM PENIPU / MULE BANK PDRM
-    // =========================================================
+    // Pangkalan Data Senarai Hitam Penipu / Mule Bank PDRM
     const scamDb = [
       { id: "01129384722", category: "Panggilan Penipuan LHDN / PDRM (Macau Scam)", details: "Dilaporkan oleh 42 mangsa menyamar sebagai pegawai penguatkuasa Polis & LHDN.", reports: "42 Laporan Rasmi" },
       { id: "0198823112", category: "SMS Phishing Perbankan & OTP", details: "Nombor digunakan untuk menghantar SMS palsu penukaran TAC/OTP perbankan internet Maybank/CIMB.", reports: "68 Laporan Rasmi" },
@@ -946,11 +951,8 @@
       }
     };
 
-    // =========================================================
-    // ENJIN AI NLP PENGESAN TEKS MESEJ SCAMMER (KEMASKINI: MENANG & HADIAH)
-    // =========================================================
+    // Enjin AI NLP Pengesan Teks Mesej Scammer
     const scamTextCorpus = {
-      // Kata Kunci High Risk: Termasuk 'menang' dan 'hadiah'
       keywordsHigh: [
         'menang', 'hadiah', 'cabutan bertuah', 'tahniah menang', 'hadiah percuma',
         'wang tunai percuma', 'pemenang bertuah', 'claim prize', 'winner', 'you have won',
@@ -972,18 +974,14 @@
       ]
     };
 
-    // Fungsi Pengesan Teks Scammer berasaskan AI Heuristik NLP
     function runAIScamTextDetection(text) {
-      if (!text || text.trim().length === 0) {
-        return null;
-      }
+      if (!text || text.trim().length === 0) return null;
       const lower = text.toLowerCase();
       let matchCountHigh = 0;
       let matchCountMed = 0;
       let detectedTriggers = [];
       let isPrizeScam = false;
 
-      // Semakan spesifik untuk keyword 'menang' dan 'hadiah'
       if (lower.includes('menang') || lower.includes('hadiah') || lower.includes('prize') || lower.includes('lucky draw') || lower.includes('中奖') || lower.includes('பரிசு')) {
         isPrizeScam = true;
       }
@@ -1002,16 +1000,11 @@
         }
       });
 
-      // Pengiraan Skor AI
       let calculatedScore = 20 + (matchCountHigh * 30) + (matchCountMed * 15);
       if (lower.includes('.apk') || lower.includes('tac') || lower.includes('otp')) calculatedScore += 25;
       if (lower.includes('http://') || lower.includes('https://') || lower.includes('t.me/')) calculatedScore += 15;
 
-      // Sekiranya ada keyword menang atau hadiah, paksa status ke HIGH RISK secara mutlak
-      if (isPrizeScam) {
-        if (calculatedScore < 85) calculatedScore = 88; // Wajib melepasi ambang 75%
-      }
-
+      if (isPrizeScam && calculatedScore < 85) calculatedScore = 88;
       if (calculatedScore > 99) calculatedScore = 99;
 
       let riskLevel = 'LOW';
@@ -1029,7 +1022,6 @@
       };
     }
 
-    // Fungsi Menganalisis Teks secara Terus daripada Borang Laporan
     function analyzeScamTextDirectly() {
       const descText = document.getElementById('reportDesc').value.trim();
       const targetText = document.getElementById('reportTarget').value.trim();
@@ -1044,7 +1036,6 @@
       renderAIAnalysisBox(result);
     }
 
-    // Paparan Hasil Analisis AI Mengikut Bahasa Terpilih
     function renderAIAnalysisBox(result) {
       const resContainer = document.getElementById('aiLiveAnalysisResult');
       if (!resContainer) return;
@@ -1119,7 +1110,6 @@
       `;
     }
 
-    // Fungsi Memuatkan Contoh Teks Mesej Scammer Mengandungi 'Menang' atau 'Hadiah'
     function loadSampleScamMessage() {
       const targetInput = document.getElementById('reportTarget');
       const descInput = document.getElementById('reportDesc');
@@ -1152,9 +1142,7 @@
       analyzeScamTextDirectly();
     }
 
-    // =========================================================
-    // DATA LAPORAN KOMUNITI (SOKONGAN TERJEMAHAN 4 BAHASA)
-    // =========================================================
+    // Data Laporan Komuniti
     const mockReports = [
       { 
         target: "0178829103", 
@@ -1194,9 +1182,7 @@
       }
     ];
 
-    // =========================================================
-    // KOLEKSI 10 SOALAN KESEDARAN SIBER SCAM (4 BAHASA)
-    // =========================================================
+    // Koleksi 10 Soalan Kesedaran Siber
     const quizBank = [
       {
         id: 1,
@@ -1790,7 +1776,6 @@
       const typeText = typeSelect.options[typeSelect.selectedIndex].text;
       const desc = document.getElementById('reportDesc').value.trim();
 
-      // Jalankan AI Scam Text Detection sebelum menghantar laporan
       const aiDetection = runAIScamTextDetection(`${target} ${desc}`);
       renderAIAnalysisBox(aiDetection);
 
@@ -1816,9 +1801,6 @@
       document.getElementById('scamReportForm').reset();
     }
 
-    // =========================================================
-    // ENGIN KUIZ INTERAKTIF 10 SOALAN DENGAN MULTI-BAHASA
-    // =========================================================
     function renderQuizQuestion() {
       const q = quizBank[currentQuizIndex];
       const qEl = document.getElementById('quizQuestion');
