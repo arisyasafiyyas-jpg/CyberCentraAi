@@ -169,11 +169,11 @@
             <div class="flex flex-col sm:flex-row gap-2 bg-white/20 p-2 rounded-2xl backdrop-blur-md border border-white/40">
               <div class="relative flex-1">
                 <i class="fa-solid fa-search absolute left-4 top-3.5 text-white/70"></i>
-                <input type="text" id="quickSearchInput" data-key-placeholder="quick-search-ph" placeholder="Masukkan No. Telefon, Bank, atau Link..." class="w-full pl-11 pr-4 py-3 bg-white/90 text-slate-800 placeholder-slate-400 rounded-xl focus:outline-none font-semibold text-sm">
+                <input type="text" id="quickSearchInput" data-key-placeholder="quick-search-ph" placeholder="Masukkan Link / URL Website Suspek..." class="w-full pl-11 pr-4 py-3 bg-white/90 text-slate-800 placeholder-slate-400 rounded-xl focus:outline-none font-semibold text-sm">
               </div>
               <button onclick="executeQuickScan()" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-extrabold px-6 py-3 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2">
                 <i class="fa-solid fa-bolt"></i>
-                <span data-key="btn-quick-check">Semak Pantas</span>
+                <span data-key="btn-quick-check">Semak Website</span>
               </button>
             </div>
           </div>
@@ -262,16 +262,19 @@
               <i class="fa-solid fa-link"></i> <span data-key="subtab-url-lbl">URL / Link Website</span>
             </button>
           </div>
-          <div id="panel-phone" class="subpanel space-y-4">
-            <label class="block text-xs font-extrabold text-slate-600 uppercase" data-key="lbl-phone-input">Masukkan Nombor Telefon / Akaun Bank Suspek</label>
-            <div class="flex flex-col sm:flex-row gap-3">
-              <input type="text" id="phoneBankInput" placeholder="Contoh: 01129384722 atau 162234098112" class="flex-1 px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:outline-none font-medium text-sm">
-              <button onclick="scanPhoneBank()" class="bg-cyan-600 hover:bg-cyan-700 text-white font-extrabold px-6 py-3 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <span data-key="btn-scan-pdrm">Semak PDRM</span>
-              </button>
+          <!-- Panel Semakan PDRM Langsung tanpa ruang input -->
+          <div id="panel-phone" class="subpanel space-y-4 py-4 text-center">
+            <div class="p-6 bg-cyan-50 border-2 border-cyan-200 rounded-2xl max-w-xl mx-auto space-y-4">
+              <div class="w-14 h-14 bg-cyan-600 text-white rounded-2xl flex items-center justify-center text-2xl mx-auto shadow-md">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <h3 class="font-extrabold text-slate-800 text-lg">Semakan Nombor Telefon / Akaun Bank Rasmi</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">Semak kesahihan nombor telefon suspek atau akaun bank keldai secara terus melalui portal rasmi PDRM Commercial Crime Investigation Department.</p>
+              <a href="https://semakmule.rmp.gov.my/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center space-x-2 bg-cyan-600 hover:bg-cyan-700 text-white font-extrabold px-8 py-3.5 rounded-xl shadow-lg transition-all text-sm">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                <span data-key="btn-scan-pdrm">Buka Portal Semak Mule PDRM</span>
+              </a>
             </div>
-            <p class="text-xs text-slate-500"><i class="fa-solid fa-circle-info mr-1 text-cyan-600"></i> <span data-key="info-pdrm">Data diintegrasikan secara langsung dengan Pangkalan Data Semak Mule PDRM.</span></p>
           </div>
           <div id="panel-url" class="subpanel space-y-4 hidden">
             <label class="block text-xs font-extrabold text-slate-600 uppercase" data-key="lbl-url-input">Masukkan URL Pautan Web / SMS Phishing</label>
@@ -365,7 +368,6 @@
                   <p class="text-lg font-black text-slate-700">013-211 1222</p>
                   <p class="text-[10px] text-slate-500" data-key="hotline-ccid-sub">Saluran semakan & laporan pantas</p>
                 </div>
-                <!-- BUTANG WHATSAPP CCID TERKINI -->
                 <a href="https://wa.me/60132111222?text=Salam%20CCID%20PDRM,%20saya%20ingin%20membuat%20semakan/laporan%20kes%20scam." 
                    target="_blank" 
                    rel="noopener noreferrer" 
@@ -525,20 +527,6 @@
     let isSeniorMode = false;
     let isScreenshotProtected = true;
 
-    // Pangkalan Data Senarai Hitam Penipu / Mule Bank PDRM
-    const scamDb = [
-      { id: "01129384722", category: "Panggilan Penipuan LHDN / PDRM (Macau Scam)", details: "Dilaporkan oleh 42 mangsa menyamar sebagai pegawai penguatkuasa Polis & LHDN.", reports: "42 Laporan Rasmi" },
-      { id: "0198823112", category: "SMS Phishing Perbankan & OTP", details: "Nombor digunakan untuk menghantar SMS palsu penukaran TAC/OTP perbankan internet Maybank/CIMB.", reports: "68 Laporan Rasmi" },
-      { id: "0123456789", category: "Sindiket Pinjaman Wang Tidak Sah / Ah Long", details: "Tersenarai dalam senarai hitam PDRM berkaitan kes pemerasan pinjaman tidak wujud.", reports: "85 Laporan Rasmi" },
-      { id: "162234098112", category: "Akaun Mule Sindiket E-Dagang (Maybank)", details: "Akaun keldai digunakan dalam kes penipuan jualan barangan elektronik murah.", reports: "19 Laporan Rasmi" },
-      { id: "514012938401", category: "Akaun Mule Penipuan Pelaburan Crypto (CIMB)", details: "Pemilik akaun dikesan bertindak sebagai Keldai Akaun (Mule Account) bagi pelaburan saham palsu.", reports: "34 Laporan Rasmi" },
-      { id: "0173349901", category: "Penipuan Pakej Pelancongan / Umrah Palsu", details: "Menyamar sebagai ejen agensi pelancongan bertauliah dan melarikan wang deposit mangsa.", reports: "27 Laporan Rasmi" },
-      { id: "800921039481", category: "Akaun Mule Penipuan Tawaran Kerja (CIMB)", details: "Akaun syarikat palsu digunakan untuk transaksi task scam secara dalam talian.", reports: "53 Laporan Rasmi" },
-      { id: "0139982711", category: "Penipuan E-Pencen & Bantuan Kerajaan", details: "Nombor menyamar sebagai pegawai JPA bagi mencuri maklumat akaun bank mangsa.", reports: "31 Laporan Rasmi" },
-      { id: "112039482711", category: "Akaun Mule Sindiket Love Scam (BSN)", details: "Akaun tempatan yang digunakan untuk menerima pindahan wang sindiket percintaan antarabangsa.", reports: "15 Laporan Rasmi" },
-      { id: "0182239401", category: "Penyebaran Fail APK Jahat (Spyware)", details: "Pesanan WhatsApp menggesa mangsa memuat turun aplikasi fail APK pembersihan rumah palsu.", reports: "76 Laporan Rasmi" }
-    ];
-
     // Kamus Terjemahan Lengkap (4 Bahasa)
     const translations = {
       ms: {
@@ -554,8 +542,8 @@
         "badge-active": "SISTEM AKTIF - PERLINDUNGAN REAL-TIME 24/7",
         "dash-hero-title": "Lindungi Diri & Keluarga Daripada Ancaman Penipuan Siber",
         "dash-hero-sub": "Platform saringan AI pintar integrasi komuniti, Semak Mule PDRM, dan perisai pencegah muat turun APK berbahaya secara automatik.",
-        "quick-search-ph": "Masukkan No. Telefon, Bank, atau Link...",
-        "btn-quick-check": "Semak Pantas",
+        "quick-search-ph": "Masukkan Link / URL Website Suspek...",
+        "btn-quick-check": "Semak Website",
         "stat-threats": "Ancaman Dikesan Hari Ini",
         "stat-accounts": "Akaun Bank Dibatalkan",
         "stat-saved": "Wang Diselamatkan",
@@ -575,8 +563,8 @@
         "subtab-phone-lbl": "No. Telefon / Akaun Bank",
         "subtab-url-lbl": "URL / Link Website",
         "lbl-phone-input": "Masukkan Nombor Telefon / Akaun Bank Suspek",
-        "btn-scan-pdrm": "Semak PDRM",
-        "info-pdrm": "Data diintegrasikan secara langsung dengan Pangkalan Data Semak Mule PDRM.",
+        "btn-scan-pdrm": "Buka Portal Semak Mule PDRM",
+        "info-pdrm": "Pautan akan terus membawa anda ke Portal Rasmi Semak Mule PDRM (semakmule.rmp.gov.my).",
         "lbl-url-input": "Masukkan URL Pautan Web / SMS Phishing",
         "btn-scan-url": "Semak Website",
         "mod2-badge": "MODUL 2",
@@ -656,8 +644,8 @@
         "badge-active": "SYSTEM ACTIVE - REAL-TIME PROTECTION 24/7",
         "dash-hero-title": "Protect Yourself & Family From Cyber Threats",
         "dash-hero-sub": "Smart AI screening integrated with community reports, PDRM Mule Check, and automated malicious APK shield.",
-        "quick-search-ph": "Enter Phone No., Bank Account, or Link...",
-        "btn-quick-check": "Quick Check",
+        "quick-search-ph": "Enter Suspect Website Link / URL...",
+        "btn-quick-check": "Check Website",
         "stat-threats": "Threats Detected Today",
         "stat-accounts": "Bank Accounts Frozen",
         "stat-saved": "Money Saved",
@@ -677,8 +665,8 @@
         "subtab-phone-lbl": "Phone No. / Bank Account",
         "subtab-url-lbl": "URL / Website Link",
         "lbl-phone-input": "Enter Suspect Phone No. / Bank Account",
-        "btn-scan-pdrm": "Check PDRM",
-        "info-pdrm": "Data is integrated directly with the PDRM Mule Check database.",
+        "btn-scan-pdrm": "Open Official PDRM Semak Mule Portal",
+        "info-pdrm": "Link will direct you straight to the Official PDRM Semak Mule Portal (semakmule.rmp.gov.my).",
         "lbl-url-input": "Enter Phishing Web URL / SMS Link",
         "btn-scan-url": "Check Website",
         "mod2-badge": "MODULE 2",
@@ -758,8 +746,8 @@
         "badge-active": "系统激活 - 24/7 实时保护",
         "dash-hero-title": "保护自己和家人免受网络诈骗威胁",
         "dash-hero-sub": "智能AI筛选集成社区报告、PDRM诈骗账户查询及自动恶意APK防护盾。",
-        "quick-search-ph": "输入电话号码、银行账户或链接...",
-        "btn-quick-check": "快速检查",
+        "quick-search-ph": "输入可疑网址 / 链接...",
+        "btn-quick-check": "检查网站",
         "stat-threats": "今日检测威胁",
         "stat-accounts": "冻结银行账户",
         "stat-saved": "挽回资金",
@@ -779,8 +767,8 @@
         "subtab-phone-lbl": "电话号码 / 银行账户",
         "subtab-url-lbl": "网址 / 链接",
         "lbl-phone-input": "输入可疑电话号码 / 银行账户",
-        "btn-scan-pdrm": "查询PDRM",
-        "info-pdrm": "数据直接与PDRM Mule Check数据库集成。",
+        "btn-scan-pdrm": "打开 PDRM 官方 Semak Mule 门户网站",
+        "info-pdrm": "链接将直接跳转至 PDRM 官方 Semak Mule 门户网站 (semakmule.rmp.gov.my)。",
         "lbl-url-input": "输入钓鱼网址 / 短信链接",
         "btn-scan-url": "检查网站",
         "mod2-badge": "模块 2",
@@ -860,8 +848,8 @@
         "badge-active": "செயலில் உள்ள அமைப்பு - 24/7 பாதுகாப்பு",
         "dash-hero-title": "இணைய மோசடிகளிலிருந்து உங்களையும் குடும்பத்தையும் பாதுகாக்கவும்",
         "dash-hero-sub": "சமூக அறிக்கைகள், PDRM மூல செக் மற்றும் தீங்கிழைக்கும் APK தடுப்புடன் கூடிய ஸ்மார்ட் AI அமைப்பு.",
-        "quick-search-ph": "தொலைபேசி எண், வங்கி கணக்கு அல்லது இணைப்பை உள்ளிடவும்...",
-        "btn-quick-check": "விரைவு சோதனை",
+        "quick-search-ph": "சந்தேகத்திற்கிடமான வலைத்தள இணைப்பை உள்ளிடவும்...",
+        "btn-quick-check": "இணையதளத்தைச் சரிபார்",
         "stat-threats": "இன்று கண்டறியப்பட்ட அச்சுறுத்தல்கள்",
         "stat-accounts": "முடக்கப்பட்ட வங்கிக் கணக்குகள்",
         "stat-saved": "சேமிக்கப்பட்ட பணம்",
@@ -881,8 +869,8 @@
         "subtab-phone-lbl": "தொலைபேசி எண் / வங்கிக் கணக்கு",
         "subtab-url-lbl": "வலைப்பக்க இணைப்பு (URL)",
         "lbl-phone-input": "சந்தேகத்திற்கிடமான தொலைபேசி எண் / வங்கிக் கணக்கை உள்ளிடவும்",
-        "btn-scan-pdrm": "PDRM சரிபார்",
-        "info-pdrm": "தரவு PDRM தரவுத்தளத்துடன் நேரடியாக இணைக்கப்பட்டுள்ளது.",
+        "btn-scan-pdrm": "PDRM Semak Mule வலைதளத்தைத் திற",
+        "info-pdrm": "இந்த இணைப்பு உங்களை நேரடியாக PDRM Semak Mule வலைதளத்திற்கு (semakmule.rmp.gov.my) அழைத்துச் செல்லும்.",
         "lbl-url-input": "பிஷிங் இணையதள முகவரியை உள்ளிடவும்",
         "btn-scan-url": "இணையதளத்தைச் சரிபார்",
         "mod2-badge": "தொகுதி 2",
@@ -1634,53 +1622,17 @@
       document.getElementById('scanResultArea').classList.add('hidden');
     }
 
+    // Semakan Pantas kini mengkhususkan kepada imbasan URL/Website
     function executeQuickScan() {
       const query = document.getElementById('quickSearchInput').value.trim();
       if (!query) {
-        alert(currentLang === 'en' ? 'Please enter a phone number, bank account, or link.' : 'Sila masukkan nombor telefon, akaun bank atau pautan.');
+        alert(currentLang === 'en' ? 'Please enter a website link or URL.' : 'Sila masukkan pautan website atau URL.');
         return;
       }
       switchTab('realtime');
-      document.getElementById('phoneBankInput').value = query;
-      scanPhoneBank();
-    }
-
-    function scanPhoneBank() {
-      const input = document.getElementById('phoneBankInput').value.trim().replace(/[-\s]/g, '');
-      const resultArea = document.getElementById('scanResultArea');
-      resultArea.classList.remove('hidden');
-      if (!input) {
-        resultArea.innerHTML = `<div class="p-4 bg-amber-50 text-amber-800 rounded-2xl text-xs font-bold">Sila masukkan nombor telefon atau akaun bank terlebih dahulu.</div>`;
-        return;
-      }
-
-      const match = scamDb.find(item => item.id === input);
-      if (match) {
-        resultArea.innerHTML = `
-          <div class="p-5 bg-red-50 border-2 border-red-300 rounded-2xl space-y-3">
-            <div class="flex items-center justify-between">
-              <span class="bg-red-600 text-white font-black text-xs px-3 py-1 rounded-full"><i class="fa-solid fa-triangle-exclamation mr-1"></i> RISIKO TINGGI (AMARAN SCAM PDRM)</span>
-              <span class="text-xs font-extrabold text-red-700">${match.reports}</span>
-            </div>
-            <h4 class="font-black text-slate-800 text-lg">${match.category}</h4>
-            <p class="text-xs text-slate-700 font-medium">${match.details}</p>
-            <div class="p-3 bg-white/80 rounded-xl text-xs text-red-800 font-bold border border-red-200">
-              Status Semak Mule PDRM: <span class="underline font-black">TERCATAT DALAM REKOD TANGKAPAN / SENARAI HITAM</span>
-            </div>
-          </div>
-        `;
-      } else {
-        resultArea.innerHTML = `
-          <div class="p-5 bg-emerald-50 border-2 border-emerald-300 rounded-2xl space-y-3">
-            <div class="flex items-center justify-between">
-              <span class="bg-emerald-600 text-white font-black text-xs px-3 py-1 rounded-full"><i class="fa-solid fa-circle-check mr-1"></i> TIADA REKOD SCAM DIJUMPAI</span>
-              <span class="text-xs font-extrabold text-emerald-700">0 Laporan Negatif</span>
-            </div>
-            <h4 class="font-black text-slate-800 text-base">Nombor / Akaun ${input} Tidak Wujud Dalam Senarai Hitam Semasa</h4>
-            <p class="text-xs text-slate-600">Walau bagaimanapun, sentiasa berwaspada apabila melakukan sebarang transaksi kewangan.</p>
-          </div>
-        `;
-      }
+      setScanSubTab('url');
+      document.getElementById('urlInput').value = query;
+      scanURL();
     }
 
     function scanURL() {
