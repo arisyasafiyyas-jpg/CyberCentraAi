@@ -351,6 +351,23 @@
             </button>
           </div>
 
+          <!-- Tambahan Pautan Rasmi Portal NSRC di Bahagian Talian Kecemasan -->
+          <div class="p-5 bg-amber-50 rounded-3xl border-2 border-amber-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-12 h-12 bg-amber-500 text-white rounded-2xl flex items-center justify-center text-xl shrink-0 shadow">
+                <i class="fa-solid fa-globe"></i>
+              </div>
+              <div>
+                <h4 class="font-extrabold text-slate-900 text-sm" data-key="nsrc-portal-title">Portal Rasmi Pusat Respons Scam Kebangsaan (NSRC)</h4>
+                <p class="text-xs text-slate-600" data-key="nsrc-portal-desc">Layari portal rasmi NFCC / NSRC untuk maklumat lanjut dan panduan laporan kes penipuan.</p>
+              </div>
+            </div>
+            <a href="https://nfcc.jpm.gov.my/index.php/ms/nsrc" target="_blank" rel="noopener noreferrer" class="bg-amber-600 hover:bg-amber-700 text-white font-extrabold px-5 py-2.5 rounded-xl text-xs shadow-md transition-all whitespace-nowrap flex items-center space-x-1.5">
+              <i class="fa-solid fa-external-link-alt text-[10px]"></i>
+              <span data-key="btn-visit-nsrc">Layari Portal NSRC</span>
+            </a>
+          </div>
+
           <div class="glass-card p-6 rounded-3xl border-2 border-red-200">
             <h3 class="font-extrabold text-slate-800 text-lg mb-4 flex items-center"><i class="fa-solid fa-phone-volume text-red-600 mr-2"></i> <span data-key="hotline-title">Talian Terus Pihak Berkuasa & Bank</span></h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -503,6 +520,23 @@
             </div>
           </div>
         </div>
+
+        <!-- Kad Rujukan Pembelajaran Tambahan (NSRC Portal) -->
+        <div class="glass-card p-6 rounded-3xl max-w-3xl mx-auto border border-cyan-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-xl shrink-0 font-bold">
+              <i class="fa-solid fa-book-open"></i>
+            </div>
+            <div>
+              <h4 class="font-extrabold text-slate-800 text-sm" data-key="edu-res-title">Sumber Rujukan & Panduan Rasmi NSRC</h4>
+              <p class="text-xs text-slate-600" data-key="edu-res-desc">Dapatkan maklumat pencegahan kewangan dan panduan bertindak sekiranya menjadi mangsa penipuan.</p>
+            </div>
+          </div>
+          <a href="https://nfcc.jpm.gov.my/index.php/ms/nsrc" target="_blank" rel="noopener noreferrer" class="bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold px-5 py-2.5 rounded-xl text-xs shadow-md transition-all whitespace-nowrap flex items-center space-x-1.5">
+            <i class="fa-solid fa-external-link-alt text-[10px]"></i>
+            <span data-key="btn-visit-edu-nsrc">Lawati Portal NSRC</span>
+          </a>
+        </div>
       </section>
     </main>
   </div>
@@ -527,7 +561,7 @@
     let isSeniorMode = false;
     let isScreenshotProtected = true;
 
-    // Kamus Terjemahan Lengkap (4 Bahasa)
+    // Kamus Terjemahan Lengkap (4 Bahasa) - Termasuk Tambahan NSRC Portal
     const translations = {
       ms: {
         "sub-title": "PELINDUNG SIBER KOMUNITI",
@@ -592,6 +626,12 @@
         "btn-call": "Hubungi",
         "hotline-ccid": "CCID Infoline PDRM (WhatsApp)",
         "hotline-ccid-sub": "Saluran semakan & laporan pantas",
+        "nsrc-portal-title": "Portal Rasmi Pusat Respons Scam Kebangsaan (NSRC)",
+        "nsrc-portal-desc": "Layari portal rasmi NFCC / NSRC untuk maklumat lanjut dan panduan laporan kes penipuan.",
+        "btn-visit-nsrc": "Layari Portal NSRC",
+        "edu-res-title": "Sumber Rujukan & Panduan Rasmi NSRC",
+        "edu-res-desc": "Dapatkan maklumat pencegahan kewangan dan panduan bertindak sekiranya menjadi mangsa penipuan.",
+        "btn-visit-edu-nsrc": "Lawati Portal NSRC",
         "mod4-badge": "MODUL 4",
         "mod4-title": "Pelaporan & Komuniti Pintar (AI Verification)",
         "mod4-desc": "Kongsi laporan scammer untuk membantu pengguna lain. Kecerdasan Buatan (AI) menyaring laporan bagi mengelakkan laporan palsu.",
@@ -694,6 +734,12 @@
         "btn-call": "Call",
         "hotline-ccid": "PDRM CCID Infoline (WhatsApp)",
         "hotline-ccid-sub": "Quick checking & reporting channel",
+        "nsrc-portal-title": "National Scam Response Center (NSRC) Official Portal",
+        "nsrc-portal-desc": "Visit the official NFCC / NSRC portal for further information and scam reporting guidelines.",
+        "btn-visit-nsrc": "Visit NSRC Portal",
+        "edu-res-title": "NSRC Official Reference & Guide",
+        "edu-res-desc": "Access financial crime prevention info and action guides if you encounter fraud.",
+        "btn-visit-edu-nsrc": "Visit NSRC Portal",
         "mod4-badge": "MODULE 4",
         "mod4-title": "Reporting & Smart Community (AI Verification)",
         "mod4-desc": "Share scam reports to help other users. Artificial Intelligence (AI) filters reports to prevent fake entries.",
@@ -796,6 +842,12 @@
         "btn-call": "拨打",
         "hotline-ccid": "PDRM CCID 咨询热线 (WhatsApp)",
         "hotline-ccid-sub": "快速查询与举报渠道",
+        "nsrc-portal-title": "国家诈骗应对中心 (NSRC) 官方门户网站",
+        "nsrc-portal-desc": "访问 NFCC / NSRC 官方门户网站以获取更多信息和诈骗举报指南。",
+        "btn-visit-nsrc": "访问 NSRC 门户网站",
+        "edu-res-title": "NSRC 官方参考与防范指南",
+        "edu-res-desc": "获取防范金融犯罪资讯以及遭遇诈骗时的应对指南。",
+        "btn-visit-edu-nsrc": "访问 NSRC 门户",
         "mod4-badge": "模块 4",
         "mod4-title": "举报与智能社区（AI验证）",
         "mod4-desc": "分享诈骗举报以帮助其他用户。人工智能（AI）会过滤虚假条目。",
@@ -898,6 +950,12 @@
         "btn-call": "அழை",
         "hotline-ccid": "PDRM CCID இன்ஃபோலைன் (WhatsApp)",
         "hotline-ccid-sub": "விரைவான சரிபார்ப்பு மற்றும் அறிக்கை சேனல்",
+        "nsrc-portal-title": "தேசிய மோசடி மறுமொழி மையம் (NSRC) அதிகாரப்பூர்வ தளம்",
+        "nsrc-portal-desc": "மேலதிக தகவல்கள் மற்றும் மோசடி புகாரளிப்பு வழிகாட்டுதலுக்கு NFCC / NSRC தளத்தைப் பார்வையிடவும்.",
+        "btn-visit-nsrc": "NSRC தளத்தைப் பார்வையிடவும்",
+        "edu-res-title": "NSRC அதிகாரப்பூர்வ குறிப்பு & வழிகாட்டி",
+        "edu-res-desc": "நிதி மோசடி தடுப்புத் தகவல்களையும், மோசடி தொடர்பான நடவடிக்கைகளையும் அறிந்து கொள்ளுங்கள்.",
+        "btn-visit-edu-nsrc": "NSRC தளத்திற்குச் செல்லவும்",
         "mod4-badge": "தொகுதி 4",
         "mod4-title": "புகார் & ஸ்மார்ட் சமூகம் (AI சரிபார்ப்பு)",
         "mod4-desc": "மற்ற பயனர்களுக்கு உதவ மோசடி புகார்களைப் பகிரவும். செயற்கை நுண்ணறிவு (AI) தவறான உள்ளீடுகளை வடிகட்டுகிறது.",
