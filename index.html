@@ -372,7 +372,7 @@
         </div>
       </section>
 
-      <!-- TAB 5: REPORTING & COMMUNITY INTELLIGENCE (ENHANCED AI DETECTION) -->
+      <!-- TAB 5: REPORTING & COMMUNITY INTELLIGENCE (ENHANCED AI DETECTION DENGAN KESAN HADIAH/MENANG) -->
       <section id="tab-community" class="tab-content hidden space-y-8">
         <div class="text-center max-w-2xl mx-auto">
           <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-100 text-amber-800 inline-block mb-2" data-key="mod4-badge">MODUL 2</span>
@@ -393,6 +393,7 @@
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1" data-key="form-type-lbl">Jenis Ancaman Scam</label>
                 <select id="reportType" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-amber-500">
+                  <option value="prize" data-key="opt-prize">🎁 Penipuan Hadiah / Cabutan Bertuah (Lucky Draw)</option>
                   <option value="phone" data-key="opt-phone">Panggilan Telefon / SMS Penipuan</option>
                   <option value="mule" data-key="opt-mule">Akaun Bank Mule / Fraud Transfer</option>
                   <option value="apk" data-key="opt-apk">Laman Web Phishing / Fail APK</option>
@@ -407,7 +408,7 @@
                 <div class="flex items-center justify-between mb-1">
                   <label class="block text-xs font-bold text-slate-600" data-key="form-desc-lbl">Keterangan Ringkas Kejadian</label>
                   <button type="button" onclick="loadSampleScamMessage()" class="text-[10px] text-cyan-700 font-bold hover:underline flex items-center">
-                    <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> <span data-key="btn-sample-msg">Masukkan Contoh Teks Scammer</span>
+                    <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> <span data-key="btn-sample-msg">Masukkan Contoh Teks Scammer (Hadiah)</span>
                   </button>
                 </div>
                 <textarea id="reportDesc" rows="3" required placeholder="Tampal mesej SMS, WhatsApp atau ceritakan bagaimana suspek cuba menipu..." data-key-placeholder="form-desc-ph" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-amber-500 font-medium"></textarea>
@@ -604,6 +605,7 @@
         "form-rep-title": "Borang Laporan Pantas",
         "ai-engine-badge": "AI NLP Scanner",
         "form-type-lbl": "Jenis Ancaman Scam",
+        "opt-prize": "🎁 Penipuan Hadiah / Cabutan Bertuah (Lucky Draw)",
         "opt-phone": "Panggilan Telefon / SMS Penipuan",
         "opt-mule": "Akaun Bank Mule / Fraud Transfer",
         "opt-apk": "Laman Web Phishing / Fail APK",
@@ -611,12 +613,12 @@
         "form-target-lbl": "Nombor Telefon / Akaun Bank / URL Suspek",
         "form-desc-lbl": "Keterangan Ringkas Kejadian",
         "form-desc-ph": "Tampal mesej SMS, WhatsApp atau ceritakan bagaimana suspek cuba menipu...",
-        "btn-sample-msg": "Masukkan Contoh Teks Scammer",
+        "btn-sample-msg": "Masukkan Contoh Teks Scammer (Hadiah)",
         "btn-ai-preview": "Imbas Teks (AI)",
         "btn-submit-rep": "Hantar & Sahkan AI",
         "feed-title": "Laporan Komuniti Terkini",
         "badge-ai-ver": "Disahkan AI",
-        "ai-result-high": "AMARAN TINGGI: Indikator Scam Dikesan",
+        "ai-result-high": "AMARAN TINGGI: Indikator Scam Dikesan (Risiko Tinggi)",
         "ai-result-medium": "AMARAN SEDERHANA: Corak Mencurigakan",
         "ai-result-low": "RISIKO RENDAH: Tiada Corak Scam Jelas",
         "ai-analysis-header": "Hasil Analisis AI:",
@@ -705,6 +707,7 @@
         "form-rep-title": "Quick Report Form",
         "ai-engine-badge": "AI NLP Scanner",
         "form-type-lbl": "Scam Threat Type",
+        "opt-prize": "🎁 Prize Scam / Fake Lucky Draw",
         "opt-phone": "Fraud Phone Call / SMS",
         "opt-mule": "Mule Bank Account / Fraud Transfer",
         "opt-apk": "Phishing Website / APK File",
@@ -712,12 +715,12 @@
         "form-target-lbl": "Suspect Phone No. / Bank Account / URL",
         "form-desc-lbl": "Brief Incident Description",
         "form-desc-ph": "Paste SMS, WhatsApp message, or describe how the suspect tried to scam you...",
-        "btn-sample-msg": "Load Sample Scam Text",
+        "btn-sample-msg": "Load Sample Scam Text (Prize)",
         "btn-ai-preview": "Scan Text (AI)",
         "btn-submit-rep": "Submit & AI Verify",
         "feed-title": "Latest Community Reports",
         "badge-ai-ver": "AI Verified",
-        "ai-result-high": "HIGH ALERT: Scam Indicators Detected",
+        "ai-result-high": "HIGH ALERT: High Risk Scam Indicator Detected",
         "ai-result-medium": "MEDIUM RISK: Suspicious Pattern Found",
         "ai-result-low": "LOW RISK: No Clear Scam Pattern",
         "ai-analysis-header": "AI Analysis Result:",
@@ -806,6 +809,7 @@
         "form-rep-title": "快速举报表单",
         "ai-engine-badge": "AI NLP 分析器",
         "form-type-lbl": "诈骗威胁类型",
+        "opt-prize": "🎁 中奖欺诈 / 假抽奖活动",
         "opt-phone": "诈骗电话 / 短信",
         "opt-mule": "诈骗银行账户 / 欺诈转账",
         "opt-apk": "网络钓鱼 / APK文件",
@@ -813,12 +817,12 @@
         "form-target-lbl": "可疑电话 / 银行账户 / 网址",
         "form-desc-lbl": "事件简要说明",
         "form-desc-ph": "粘贴可疑短信、WhatsApp内容或描述被骗过程...",
-        "btn-sample-msg": "载入诈骗信息范例",
+        "btn-sample-msg": "载入诈骗信息范例 (中奖/礼物)",
         "btn-ai-preview": "AI 文本分析",
         "btn-submit-rep": "提交并通过AI验证",
         "feed-title": "最新社区举报",
         "badge-ai-ver": "AI已验证",
-        "ai-result-high": "高风险警报：检测到明显诈骗特征",
+        "ai-result-high": "高风险警报：检测到严重诈骗模式 (High Risk)",
         "ai-result-medium": "中风险警报：发现可疑可疑模式",
         "ai-result-low": "低风险：未见明显诈骗模式",
         "ai-analysis-header": "AI 分析报告：",
@@ -907,6 +911,7 @@
         "form-rep-title": "விரைவான அறிக்கை படிவம்",
         "ai-engine-badge": "AI உரை ஆய்வாளர்",
         "form-type-lbl": "மோசடி அச்சுறுத்தல் வகை",
+        "opt-prize": "🎁 பரிசு மோசடி / போலி குலுக்கல் (Prize Scam)",
         "opt-phone": "மோசடி தொலைபேசி அழைப்பு / SMS",
         "opt-mule": "மூல் வங்கிக் கணக்கு / மோசடிப் பரிமாற்றம்",
         "opt-apk": "பிஷிங் வலைத்தளம் / APK கோப்பு",
@@ -914,12 +919,12 @@
         "form-target-lbl": "சந்தேகத்திற்குரிய எண் / கணக்கு / URL",
         "form-desc-lbl": "சம்பவத்தின் சுருக்கமான விளக்கம்",
         "form-desc-ph": "SMS, WhatsApp உரையை ஒட்டவும் அல்லது நடந்ததை விவரிக்கவும்...",
-        "btn-sample-msg": "மாதிரி உரையை ஏற்று",
+        "btn-sample-msg": "மாதிரி உரையை ஏற்று (பரிசு)",
         "btn-ai-preview": "AI ஆய்வு செய்",
         "btn-submit-rep": "சமர்ப்பித்து சரிபார்",
         "feed-title": "சமீபத்திய சமூக அறிக்கைகள்",
         "badge-ai-ver": "AI சரிபார்க்கப்பட்டது",
-        "ai-result-high": "அதிக எச்சரிக்கை: மோசடி அறிகுறி கண்டறியப்பட்டது",
+        "ai-result-high": "அதிக எச்சரிக்கை: மோசடி அறிகுறி கண்டறியப்பட்டது (High Risk)",
         "ai-result-medium": "நடுத்தர ஆபத்து: சந்தேகத்திற்கிடமான முறை",
         "ai-result-low": "குறைந்த ஆபத்து: தெளிவான மோசடி இல்லை",
         "ai-analysis-header": "AI பகுப்பாய்வு முடிவு:",
@@ -942,24 +947,28 @@
     };
 
     // =========================================================
-    // ENJIN AI NLP PENGESAN TEKS MESEJ SCAMMER (MULTI-LANGUAGE)
+    // ENJIN AI NLP PENGESAN TEKS MESEJ SCAMMER (KEMASKINI: MENANG & HADIAH)
     // =========================================================
     const scamTextCorpus = {
+      // Kata Kunci High Risk: Termasuk 'menang' dan 'hadiah'
       keywordsHigh: [
+        'menang', 'hadiah', 'cabutan bertuah', 'tahniah menang', 'hadiah percuma',
+        'wang tunai percuma', 'pemenang bertuah', 'claim prize', 'winner', 'you have won',
+        'lucky draw', 'cash prize', 'bonus tunai',
         'otp', 'tac', 'waran tangkap', 'lhdn', 'mahkamah', 'pdrm', 'akaun dibekukan', 
         'penggubahan wang', 'muat turun fail', 'download apk', '.apk', 'cleaning service', 
         'bantuan khas e-pencen', 'task scam', 'like and subscribe', 'pulangan 50%', 'komisen tinggi',
         'arrest warrant', 'court order', 'police warrant', 'freeze account', 'unfreeze',
         'telegram task', 'guaranteed profit', 'invest crypto', 'send otp', 'share password',
-        '逮捕令', '公安', '洗钱', '冻结账户', '验证码', '高额返利', '刷单兼职', '下载安装包',
-        'கைது வாரண்ட்', 'காவல்துறை', 'கணக்கு முடக்கம்', 'கடவுச்சொல்', 'அதிக லாபம்', 'பணி மோசடி'
+        '中奖', '获奖', '领奖', '免费礼物', '大奖', '幸运抽奖', '逮捕令', '公安', '洗钱', '冻结账户', '验证码', '高额返利', '刷单兼职', '下载安装包',
+        'வெற்றி', 'பரிசு', 'பரிசு வென்றுள்ளீர்கள்', 'கைது வாரண்ட்', 'காவல்துறை', 'கணக்கு முடக்கம்', 'கடவுச்சொல்', 'அதிக லாபம்', 'பணி மோசடி'
       ],
       keywordsMedium: [
         'urgent', 'segera', 'tindakan undang-undang', 'klik link', 'pautan berikut',
-        'click here', 'bonus percuma', 'tahniah menang', 'claim prize', 'hadiah percuma',
-        'tunggakan saman', 'penyelesaian luar', 'black-list', 'clearing fee',
-        '立即处理', '限时', '免费领取', '中奖', '点击链接',
-        'உடனடி', 'பரிசு', 'இணைப்பைக் கிளிக் செய்க', 'கட்டணம்'
+        'click here', 'bonus percuma', 'tunggakan saman', 'penyelesaian luar', 'black-list', 'clearing fee',
+        'processing fee', 'bayaran duti setem', 'bayar cukai hadiah',
+        '立即处理', '限时', '免费领取', '点击链接', '手续费',
+        'உடனடி', 'இணைப்பைக் கிளிக் செய்க', 'கட்டணம்'
       ]
     };
 
@@ -972,18 +981,24 @@
       let matchCountHigh = 0;
       let matchCountMed = 0;
       let detectedTriggers = [];
+      let isPrizeScam = false;
+
+      // Semakan spesifik untuk keyword 'menang' dan 'hadiah'
+      if (lower.includes('menang') || lower.includes('hadiah') || lower.includes('prize') || lower.includes('lucky draw') || lower.includes('中奖') || lower.includes('பரிசு')) {
+        isPrizeScam = true;
+      }
 
       scamTextCorpus.keywordsHigh.forEach(kw => {
         if (lower.includes(kw.toLowerCase())) {
           matchCountHigh++;
-          if (detectedTriggers.length < 3) detectedTriggers.push(kw);
+          if (detectedTriggers.length < 4 && !detectedTriggers.includes(kw)) detectedTriggers.push(kw);
         }
       });
 
       scamTextCorpus.keywordsMedium.forEach(kw => {
         if (lower.includes(kw.toLowerCase())) {
           matchCountMed++;
-          if (detectedTriggers.length < 4) detectedTriggers.push(kw);
+          if (detectedTriggers.length < 5 && !detectedTriggers.includes(kw)) detectedTriggers.push(kw);
         }
       });
 
@@ -991,15 +1006,25 @@
       let calculatedScore = 20 + (matchCountHigh * 30) + (matchCountMed * 15);
       if (lower.includes('.apk') || lower.includes('tac') || lower.includes('otp')) calculatedScore += 25;
       if (lower.includes('http://') || lower.includes('https://') || lower.includes('t.me/')) calculatedScore += 15;
+
+      // Sekiranya ada keyword menang atau hadiah, paksa status ke HIGH RISK secara mutlak
+      if (isPrizeScam) {
+        if (calculatedScore < 85) calculatedScore = 88; // Wajib melepasi ambang 75%
+      }
+
       if (calculatedScore > 99) calculatedScore = 99;
 
       let riskLevel = 'LOW';
-      if (calculatedScore >= 75) riskLevel = 'HIGH';
-      else if (calculatedScore >= 45) riskLevel = 'MEDIUM';
+      if (calculatedScore >= 75 || isPrizeScam) {
+        riskLevel = 'HIGH';
+      } else if (calculatedScore >= 45) {
+        riskLevel = 'MEDIUM';
+      }
 
       return {
         score: calculatedScore,
         level: riskLevel,
+        isPrizeScam: isPrizeScam,
         triggers: detectedTriggers
       };
     }
@@ -1008,7 +1033,6 @@
     function analyzeScamTextDirectly() {
       const descText = document.getElementById('reportDesc').value.trim();
       const targetText = document.getElementById('reportTarget').value.trim();
-      const resContainer = document.getElementById('aiLiveAnalysisResult');
 
       if (!descText && !targetText) {
         alert(currentLang === 'en' ? 'Please paste or write suspicious scam text first.' : 'Sila masukkan teks mesej suspek untuk dianalisis.');
@@ -1034,18 +1058,28 @@
       const dict = translations[currentLang] || translations['ms'];
 
       let badgeBg = "bg-red-50 border-red-300 text-red-800";
-      let title = dict['ai-result-high'] || "AMARAN TINGGI: Indikator Scam Dikesan";
+      let title = dict['ai-result-high'] || "AMARAN TINGGI: Indikator Scam Dikesan (Risiko Tinggi)";
       let icon = "fa-triangle-exclamation text-red-600";
       let advice = "";
 
       if (result.level === 'HIGH') {
-        advice = currentLang === 'en' 
-          ? "CRITICAL: Do NOT disclose passwords, never transfer money, and block this number immediately!" 
-          : currentLang === 'zh'
-          ? "极度危险：切勿提供密码与验证码，绝勿向对方转账，并立即拉黑拦截！"
-          : currentLang === 'ta'
-          ? "முக்கிய எச்சரிக்கை: கடவுச்சொல் பகிர வேண்டாம், பணம் அனுப்ப வேண்டாம், உடனடியாக முடக்கவும்!"
-          : "KRITIKAL: JANGAN klik pautan, jangan serahkan OTP dan jangan lakukan pindahan wang sama sekali!";
+        if (result.isPrizeScam) {
+          advice = currentLang === 'en'
+            ? "CRITICAL (PRIZE SCAM): Scammers lure victims with fake prizes/winnings and demand 'processing fees' or banking credentials. NEVER transfer money to claim any prize!"
+            : currentLang === 'zh'
+            ? "极度危险（中奖陷阱）：骗子以虚假的“中奖/免费大奖”为诱饵，索要手续费或银行验证码。绝勿转账领奖！"
+            : currentLang === 'ta'
+            ? "முக்கிய எச்சரிக்கை (பரிசு மோசடி): போலி பரிசுகள் மூலம் ஏமாற்றி கட்டணம் அல்லது கடவுச்சொல் கேட்கிறார்கள். பணம் செலுத்த வேண்டாம்!"
+            : "KRITIKAL (PENIPUAN HADIAH/MENANG): Taktik sindiket mendakwa anda menang hadiah wang tunai/cabutan bertuah untuk memeras 'yuran pemprosesan' atau mencuri akses akaun. JANGAN buat sebarang bayaran!";
+        } else {
+          advice = currentLang === 'en' 
+            ? "CRITICAL: Do NOT disclose passwords, never transfer money, and block this number immediately!" 
+            : currentLang === 'zh'
+            ? "极度危险：切勿提供密码与验证码，绝勿向对方转账，并立即拉黑拦截！"
+            : currentLang === 'ta'
+            ? "முக்கிய எச்சரிக்கை: கடவுச்சொல் பகிர வேண்டாம், பணம் அனுப்ப வேண்டாம், உடனடியாக முடக்கவும்!"
+            : "KRITIKAL: JANGAN klik pautan, jangan serahkan OTP dan jangan lakukan pindahan wang sama sekali!";
+        }
       } else if (result.level === 'MEDIUM') {
         badgeBg = "bg-amber-50 border-amber-300 text-amber-800";
         title = dict['ai-result-medium'] || "AMARAN SEDERHANA: Corak Mencurigakan";
@@ -1071,41 +1105,44 @@
       }
 
       const triggerTags = result.triggers.length > 0 
-        ? `<div class="mt-1 flex flex-wrap gap-1 text-[10px]">${result.triggers.map(t => `<span class="bg-white/80 px-2 py-0.5 rounded border font-mono">#${t}</span>`).join('')}</div>`
+        ? `<div class="mt-1 flex flex-wrap gap-1 text-[10px]">${result.triggers.map(t => `<span class="bg-white/80 px-2 py-0.5 rounded border font-mono font-bold text-red-600">#${t}</span>`).join('')}</div>`
         : '';
 
       resContainer.className = `p-3.5 rounded-2xl border transition-all text-xs space-y-1 ${badgeBg}`;
       resContainer.innerHTML = `
         <div class="flex items-center justify-between font-black">
           <span class="flex items-center"><i class="fa-solid ${icon} mr-1.5"></i> ${title}</span>
-          <span class="px-2 py-0.5 bg-white/90 rounded-full text-[10px] shadow-sm font-extrabold">${result.score}% AI Risk Index</span>
+          <span class="px-2 py-0.5 bg-white/90 rounded-full text-[10px] shadow-sm font-extrabold text-red-700">${result.score}% AI Risk Index</span>
         </div>
         <p class="text-[11px] font-medium leading-relaxed">${advice}</p>
         ${triggerTags}
       `;
     }
 
-    // Fungsi Memuatkan Contoh Teks Mesej Scammer untuk Diuji
+    // Fungsi Memuatkan Contoh Teks Mesej Scammer Mengandungi 'Menang' atau 'Hadiah'
     function loadSampleScamMessage() {
       const targetInput = document.getElementById('reportTarget');
       const descInput = document.getElementById('reportDesc');
+      const typeSelect = document.getElementById('reportType');
+
+      if (typeSelect) typeSelect.value = "prize";
 
       const samples = {
         ms: {
-          target: "01129384722",
-          desc: "PERINGATAN LHDN: Waran tangkap telah dikeluarkan atas nama anda kerana penglibatan kes gubah wang haram. Sila muat turun fail APK audit rasmi di https://lhdn-audit-portal.vip/my.apk dan buat semakan sekarang!"
+          target: "0178829103",
+          desc: "TAHNIAH! Nombor anda telah MENANG HADIAH cabutan bertuah wang tunai RM50,000 daripada Shopee/Petronas. Sila klik pautan http://tebus-hadiah-wang.xyz atau pindahkan caj duti setem RM350 untuk pengesahan segera!"
         },
         en: {
-          target: "0198823112",
-          desc: "BANK SECURITY ALERT: Your online banking account has been suspended due to suspicious TAC attempts. Click http://bank-secure-verify.xyz immediately or transfer funds to temporary audit vault."
+          target: "0178829103",
+          desc: "CONGRATULATIONS! You have been selected as the WINNER of a luxury CAR PRIZE and RM20,000 cash. To claim your prize, please register at http://claim-lucky-prize.online immediately and pay processing fees."
         },
         zh: {
-          target: "0123456789",
-          desc: "紧急通知：警方商业罪案调查局已对您签发逮捕令，涉案账户即将被冻结。请立即下载官方审查工具安装包APK配合调查，切勿告知他人！"
+          target: "0178829103",
+          desc: "恭喜您！您的手机号码在周年庆典中喜中大奖，荣获特等奖现金 RM30,000 免费礼物！请立即点击 http://claim-lucky-prize.online 领取奖金并缴纳税费手续费。"
         },
         ta: {
-          target: "0173349901",
-          desc: "முக்கிய எச்சரிக்கை: உங்கள் வங்கிக் கணக்கு முடக்கப்பட்டுள்ளது. உடனடியாக OTP எண்ணை 0173349901 என்ற எண்ணிற்கு அனுப்பி கணக்கை புதுப்பிக்கவும்."
+          target: "0178829103",
+          desc: "வாழ்த்துகள்! உங்களுக்கு ரொக்கப் பரிசு மற்றும் கார் வெற்றி கிடைத்துள்ளது. பரிசைப் பெற http://tebus-hadiah.xyz தளத்தில் உள்நுழைந்து செயலாக்க கட்டணத்தை செலுத்தவும்."
         }
       };
 
@@ -1119,6 +1156,18 @@
     // DATA LAPORAN KOMUNITI (SOKONGAN TERJEMAHAN 4 BAHASA)
     // =========================================================
     const mockReports = [
+      { 
+        target: "0178829103", 
+        type: { ms: "Penipuan Hadiah / Menang", en: "Prize Scam", zh: "中奖骗局", ta: "பரிசு மோசடி" },
+        desc: { 
+          ms: "Menghantar mesej mendakwa menang hadiah cabutan bertuah RM50,000 dan meminta bayaran deposit.",
+          en: "Sent message claiming I won a RM50,000 cash prize demanding an upfront processing deposit.",
+          zh: "发送短信声称中大奖 RM50,000，要求先缴付手续费兑现。",
+          ta: "RM50,000 பரிசு வென்றதாகக் கூறி முன்கூட்டியே வைப்புத் தொகை கேட்டனர்."
+        }, 
+        score: "99%", 
+        time: { ms: "5 minit lalu", en: "5 mins ago", zh: "5分钟前", ta: "5 நிமிடங்களுக்கு முன்" } 
+      },
       { 
         target: "0198823112", 
         type: { ms: "Panggilan Penipuan", en: "Fraud Call", zh: "诈骗电话", ta: "மோசடி அழைப்பு" },
@@ -1257,7 +1306,7 @@
         },
         correct: 1,
         explanation: {
-          ms: "Bank di Malaysia tidak lagi menghantar SMS mengandungi pautan pautan aktif (hyperlink) mengikut garis panduan Bank Negara Malaysia (BNM).",
+          ms: "Bank di Malaysia tidak lagi menghantar SMS mengandungi pautan aktif (hyperlink) mengikut garis panduan Bank Negara Malaysia (BNM).",
           en: "Under Bank Negara Malaysia directives, banks no longer send SMS messages containing clickable hyperlinks.",
           zh: "根据马来西亚国家银行 (BNM) 的规定，所有银行均已禁止向用户发送带有可点击链接的短信。",
           ta: "மலேசிய தேசிய வங்கியின் வழிகாட்டுதலின்படி, வங்கிகள் இனி கிளிக் செய்யக்கூடிய இணைப்புகளுடன் SMS அனுப்பாது."
@@ -1559,11 +1608,9 @@
         }
       });
 
-      // Kemas kini komponen dinamik: Laporan & Kuiz
       renderCommunityReports();
       renderQuizQuestion();
 
-      // Kemas kini jika kotak analisis AI sedang terbuka
       const descText = document.getElementById('reportDesc').value.trim();
       const targetText = document.getElementById('reportTarget').value.trim();
       if (descText || targetText) {
@@ -1655,12 +1702,12 @@
       const resultArea = document.getElementById('scanResultArea');
       resultArea.classList.remove('hidden');
       if (!url) return;
-      if (url.includes('login') || url.includes('update') || url.includes('apk') || url.includes('secure')) {
+      if (url.includes('login') || url.includes('update') || url.includes('apk') || url.includes('secure') || url.includes('prize') || url.includes('hadiah')) {
         resultArea.innerHTML = `
           <div class="p-5 bg-red-50 border-2 border-red-300 rounded-2xl space-y-2">
-            <span class="bg-red-600 text-white font-black text-xs px-3 py-1 rounded-full">PAUTAN PHISHING / MALWARE</span>
+            <span class="bg-red-600 text-white font-black text-xs px-3 py-1 rounded-full">PAUTAN PHISHING / MALWARE / SCAM</span>
             <h4 class="font-black text-slate-800 text-base mt-2">${url}</h4>
-            <p class="text-xs text-slate-700">Sistem AI mendapati domain ini menyamar sebagai portal rasmi. Elakkan memasukkan sebarang maklumat peribadi.</p>
+            <p class="text-xs text-slate-700">Sistem AI mendapati domain ini menyamar sebagai portal rasmi atau laman tuntutan hadiah palsu. Elakkan memasukkan sebarang maklumat peribadi.</p>
           </div>
         `;
       } else {
@@ -1743,7 +1790,7 @@
       const typeText = typeSelect.options[typeSelect.selectedIndex].text;
       const desc = document.getElementById('reportDesc').value.trim();
 
-      // Jalankan AI Scam Text Detection sebelum memasukkan data
+      // Jalankan AI Scam Text Detection sebelum menghantar laporan
       const aiDetection = runAIScamTextDetection(`${target} ${desc}`);
       renderAIAnalysisBox(aiDetection);
 
